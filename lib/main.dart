@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
        // colorScheme: AppColors.marron,
         useMaterial3: true,
       ), 
-      home: Homescreencustomer(),
+      home: InfoPerso(),
     );
   }
 }

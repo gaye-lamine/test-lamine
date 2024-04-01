@@ -361,10 +361,10 @@ class _InfoPersoState extends State<InfoPerso> {
                      isactive
                         ? () {
                             // Add your onPressed logic here
-                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Homescreencustomer()));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Homescreencustomer()));
                           }
                         : null,
                     child: TitleOption(
