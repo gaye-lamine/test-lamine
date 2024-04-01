@@ -38,6 +38,14 @@ dependencies:
   google_fonts: ^5.1.0 
   pin_code_fields: ^8.0.1
   pinput: ^4.0.0
+  voice_message_package: ^2.1.4
+  timeline_tile: 2.0.0
+  web: 0.5.0
+  timelines: ^0.1.0
+  percent_indicator: ^4.2.3
+  
+
+
 
 dev_dependencies:
   flutter_test:
@@ -74,11 +82,68 @@ flutter:
     - images/flag.png
     - images/location.png
     - images/location2.png
+    - images/location3.png
     - images/back.png
     - images/terimage.png
     - images/person.png
     - images/cgu.png
     - images/logoter2.png
+    - images/home1.png
+    - images/home2.png
+    - images/ticket1.png
+    - images/ticket2.png
+    - images/card1.png
+    - images/card2.png
+    - images/user1.png
+    - images/user2.png
+    - images/homefond.png
+    - images/profile.png
+    - images/arrow.png
+    - images/icontrajet.png
+    - audios/audio.mp3
+    - images/trajet.png
+    - images/train.png
+    - images/star.png
+    - images/classe.png
+    - images/plus.png
+    - images/app/
+    - images/sensvoyage.png
+    - images/location4.png
+    - images/detailvoyage.png
+    - images/trainrouge.png
+    - images/app/
+    - images/ajoutvoyage.png
+    - images/ajoutvoyagesuccess.png
+    - images/v.png
+    - images/v2.png
+    - images/ticket.png
+    - images/abonnement.png
+    - images/aide.png
+    - images/aide2.png
+    - images/arrowright.png
+    - images/exit.png
+    - images/profil2.png
+    - images/abonne.png
+    - images/modifypic.png
+   # - .png
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
