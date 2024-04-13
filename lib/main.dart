@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:terappmobile/screens/auth/cgu.dart';
 import 'package:terappmobile/screens/auth/deliverytrack.dart';
-import 'package:terappmobile/screens/auth/home/abonnement.dart';
-import 'package:terappmobile/screens/auth/home/accueil.dart';
-import 'package:terappmobile/screens/auth/home/carte_abonnement.dart';
-import 'package:terappmobile/screens/auth/home/home.dart';
-import 'package:terappmobile/screens/auth/home/modify_profile.dart';
-import 'package:terappmobile/screens/auth/home/profile.dart';
+import 'package:terappmobile/screens/home/abonnement.dart';
+import 'package:terappmobile/screens/home/accueil.dart';
+import 'package:terappmobile/screens/home/carte_abonnement.dart';
+import 'package:terappmobile/screens/home/home.dart';
+import 'package:terappmobile/screens/home/modify_profile.dart';
+import 'package:terappmobile/screens/home/profile.dart';
 import 'package:terappmobile/screens/auth/info_perso.dart';
 import 'package:terappmobile/screens/auth/otp.dart';
 import 'package:terappmobile/screens/auth/sign_up.dart';
@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
        theme: ThemeData(
        // colorScheme: AppColors.marron,
         useMaterial3: true,
-      ), 
-      home: InfoPerso(),
+      ),
+      home: Accueil(),
     );
   }
 }

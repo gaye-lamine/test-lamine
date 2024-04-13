@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:terappmobile/models/card_info.dart';
 import 'package:terappmobile/models/voyage_info.dart';
 import 'package:terappmobile/screens/ajout_voyage/ajout_voyage.dart';
-import 'package:terappmobile/screens/auth/home/accueil.dart';
+import 'package:terappmobile/screens/home/accueil.dart';
 import 'package:terappmobile/screens/train/suivi_voyage.dart';
 import 'package:terappmobile/screens/train/train_voyage.dart';
 import 'package:terappmobile/utils/app_colors.dart';

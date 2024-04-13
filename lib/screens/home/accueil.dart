@@ -623,90 +623,97 @@ class _AccueilState extends State<Accueil> {
                                   borderRadius: BorderRadius.circular(6)),
                               child: Padding(
                                 padding: EdgeInsets.all(5),
-                                child: Row(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      width: 70,
-                                      height: 46,
-                                      color: Color.fromRGBO(245, 245, 245, 1),
-                                      child: Center(
-                                        child: Image.asset(
-                                          'images/logoter.png',
-                                          width: 58,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          //Image.asset(cardInfo.imageAsset),
-                                          TitleOption(
-                                              data: cardInfo.title,
-                                              color: Colors.black,
-                                              size: 16,
-                                              weight: FontWeight.w500),
-                                          TitleOption(
-                                              data: cardInfo.description,
-                                              color: Color.fromRGBO(
-                                                  152, 162, 179, 1),
-                                              size: 12,
-                                              textAlign: TextAlign.start,
-                                              weight: FontWeight.w300),
-                                          Container(
-                                            width: 39,
-                                            child: VoiceMessageView(
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              circlesColor: AppColors.marron,
-                                              activeSliderColor:
-                                                  AppColors.marron,
-                                              notActiveSliderColor:
-                                                  Colors.transparent,
-                                              size: 39,
-                                              controller: VoiceController(
-                                                audioSrc: cardInfo.audioFile
-                                                    .toString(),
-                                                maxDuration:
-                                                    const Duration(seconds: 10),
-                                                isFile: false,
-                                                onComplete: () {
-                                                  /// do something on complete
-                                                },
-                                                onPause: () {
-                                                  /// do something on pause
-                                                },
-                                                onPlaying: () {
-                                                  /// do something on playing
-                                                },
-                                                onError: (err) {
-                                                  /// do somethin on error
-                                                },
-                                              ),
-                                              innerPadding: 12,
-                                              cornerRadius: 20,
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: 70,
+                                          height: 46,
+                                          color: Color.fromRGBO(245, 245, 245, 1),
+                                          child: Center(
+                                            child: Image.asset(
+                                              'images/logoter.png',
+                                              width: 58,
                                             ),
                                           ),
-
-                                          // Other card content
-                                        ],
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              //Image.asset(cardInfo.imageAsset),
+                                              TitleOption(
+                                                  data: cardInfo.title,
+                                                  color: Colors.black,
+                                                  size: 16,
+                                                  weight: FontWeight.w500),
+                                              TitleOption(
+                                                  data: cardInfo.description,
+                                                  color: Color.fromRGBO(
+                                                      152, 162, 179, 1),
+                                                  size: 12,
+                                                  textAlign: TextAlign.start,
+                                                  weight: FontWeight.w300),
+                                             
+                                              // Other card content
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    
+                                      /*  Column(
+                                      children: [
+                                        Image.asset(cardInfo.imageAsset),
+                                        Text(cardInfo.title),
+                                        Text(cardInfo.description),
+                                        // Other card content
+                                      ],
+                                    ), */
+                                    ),
+                                      Flexible(
+                                        //height: 80,
+                                        //width: 50,
+                                        child: VoiceMessageView(
+                                          backgroundColor: Colors.transparent,
+                                          circlesColor: AppColors.marron,
+                                          activeSliderColor: AppColors.marron,
+                                          notActiveSliderColor:
+                                              Colors.transparent,
+                                          size: 39,
+                                          controller: VoiceController(
+                                            audioSrc:
+                                                cardInfo.audioFile.toString(),
+                                            maxDuration:
+                                                const Duration(seconds: 10),
+                                            isFile: false,
+                                            onComplete: () {
+                                              /// do something on complete
+                                            },
+                                            onPause: () {
+                                              /// do something on pause
+                                            },
+                                            onPlaying: () {
+                                              /// do something on playing
+                                            },
+                                            onError: (err) {
+                                              /// do somethin on error
+                                            },
+                                          ),
+                                          innerPadding: 12,
+                                          cornerRadius: 20,
+                                        ),
                                       ),
-                                    )
-                                  ],
+                                    
 
-                                  /*  Column(
-                                  children: [
-                                    Image.asset(cardInfo.imageAsset),
-                                    Text(cardInfo.title),
-                                    Text(cardInfo.description),
-                                    // Other card content
                                   ],
-                                ), */
                                 ),
                               ),
                             ),

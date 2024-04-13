@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:terappmobile/models/nav_bar.dart';
-import 'package:terappmobile/screens/auth/home/abonnement.dart';
-import 'package:terappmobile/screens/auth/home/accueil.dart';
-import 'package:terappmobile/screens/auth/home/profile.dart';
-import 'package:terappmobile/screens/auth/home/ticket.dart';
+import 'package:terappmobile/screens/home/abonnement.dart';
+import 'package:terappmobile/screens/home/accueil.dart';
+import 'package:terappmobile/screens/home/profile.dart';
+import 'package:terappmobile/screens/home/ticket.dart';
 import 'package:terappmobile/utils/app_colors.dart';
 
 class Homescreencustomer extends StatefulWidget {

@@ -193,33 +193,35 @@ class _SignUpState extends State<SignUp> {
                             SizedBox(
                               width: 10,
                             ),
-                            Container(
-                              width: 250,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  //color: Color.fromRGBO(245, 245, 245, 1),
-                                  /*  border: Border.all(
-                                    color: AppColors.marron,
-                                    width: 1,
-                                  ), */
-                                  borderRadius: BorderRadius.circular(6)),
-                              child: TextField(
-                                controller: phoneNumberController,
-                                onChanged: (value) {
-                                  updateActiveState();
-                                },
-                                decoration: InputDecoration(
-                                  hintText: '',
-                                  labelStyle: TextStyle(color: Colors.black38),
-                                  fillColor: Colors.white,
-                                  focusColor: Colors.grey,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide(
-                                        width: 3.0, color: AppColors.marron),
+                            Expanded(
+                              child: Container(
+                                //width: 250,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    //color: Color.fromRGBO(245, 245, 245, 1),
+                                    /*  border: Border.all(
+                                      color: AppColors.marron,
+                                      width: 1,
+                                    ), */
+                                    borderRadius: BorderRadius.circular(6)),
+                                child: TextField(
+                                  controller: phoneNumberController,
+                                  onChanged: (value) {
+                                    updateActiveState();
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: '',
+                                    labelStyle: TextStyle(color: Colors.black38),
+                                    fillColor: Colors.white,
+                                    focusColor: Colors.grey,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide(
+                                          width: 3.0, color: AppColors.marron),
+                                    ),
                                   ),
+                                  keyboardType: TextInputType.number,
                                 ),
-                                keyboardType: TextInputType.number,
                               ),
                             ),
                           ],

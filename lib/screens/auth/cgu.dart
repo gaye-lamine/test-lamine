@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:terappmobile/screens/auth/info_perso.dart';
 import 'package:terappmobile/utils/app_colors.dart';
 import 'package:terappmobile/utils/googlefonts.dart';
@@ -85,7 +87,8 @@ class _CguState extends State<Cgu> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      height: 300 ,
+                      //color: Colors.blue,
+                      //height: 300 ,
                       child: 
                       Column(
                         children: [
@@ -131,21 +134,14 @@ class _CguState extends State<Cgu> {
                             ],
                           ),
                         ),
-
-                        ]
-                      ),
-                    ),
-                    //SizedBox(height: 20),
-                    Spacer(),
-                    Expanded(
-                      child: Container(
-                        height:200,
-                        child: Column(
+                          SizedBox(height: 10,) ,
+                          Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                           
-                            SizedBox(height: 20),
+                            //(height: 20),
                             Container(
+                             // height: 50,
                               decoration: BoxDecoration(
                                 color: Color.fromRGBO(245, 245, 245, 1),
                                 borderRadius: BorderRadius.circular(5)
@@ -179,70 +175,78 @@ class _CguState extends State<Cgu> {
                             
                             ),
                             SizedBox(height: 24,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    elevation: 0,
-                                    tapTargetSize: MaterialTapTargetSize
-                                        .shrinkWrap, // Remove click animation
-                                   // onPrimary: Color.fromRGBO(245, 245, 245, 1),
-                                    backgroundColor:
-                                        Color.fromRGBO(245, 245, 245, 1),
-                                    minimumSize: Size(width / 2 - 20, 50),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6.0),
+                          ]) 
+                        
+                        ]
+                      ),
+                    ),
+                    Spacer() ,
+                    //SizedBox(height: 20),
+                    Expanded(
+                     child : Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      elevation: 0,
+                                      tapTargetSize: MaterialTapTargetSize
+                                          .shrinkWrap, // Remove click animation
+                                     // onPrimary: Color.fromRGBO(245, 245, 245, 1),
+                                      backgroundColor:
+                                          Color.fromRGBO(245, 245, 245, 1),
+                                      minimumSize: Size(width / 2 - 20, 50),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(6.0),
+                                      ),
+                                    ),
+                                    onPressed:  isChecked ? () {
+                                      // Add your onPressed logic here
+                                    } : null ,
+                                    child: TitleText(
+                                      data: 'Decliner',
+                                      color: Colors.red,
+                                      size: 13,
+                                      weight: FontWeight.normal,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                      fontFamily: 'Poppins',
                                     ),
                                   ),
-                                  onPressed:  isChecked ? () {
-                                    // Add your onPressed logic here
-                                  } : null ,
-                                  child: TitleText(
-                                    data: 'Decliner',
-                                    color: Colors.red,
-                                    size: 13,
-                                    weight: FontWeight.normal,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.clip,
-                                    fontFamily: 'Poppins',
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    elevation: 0,
-                                    tapTargetSize: MaterialTapTargetSize
-                                        .shrinkWrap, // Remove click animation
-                                    backgroundColor: AppColors.marron,
-                                    minimumSize: Size(width / 2 - 20, 50),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6.0),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      elevation: 0,
+                                      tapTargetSize: MaterialTapTargetSize
+                                          .shrinkWrap, // Remove click animation
+                                      backgroundColor: AppColors.marron,
+                                      minimumSize: Size(width / 2 - 20, 50),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(6.0),
+                                      ),
+                                    ),
+                                    onPressed: isChecked ? () {
+                                       Navigator.push(context, MaterialPageRoute(builder: (context)=> InfoPerso()));
+                              
+                                    } : null,
+                                    child: TitleText(
+                                      data: 'Accepter',
+                                      color: Colors.white,
+                                      size: 13,
+                                      weight: FontWeight.normal,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                      fontFamily: 'Poppins',
                                     ),
                                   ),
-                                  onPressed: isChecked ? () {
-                                     Navigator.push(context, MaterialPageRoute(builder: (context)=> InfoPerso()));
-
-                                  } : null,
-                                  child: TitleText(
-                                    data: 'Accepter',
-                                    color: Colors.white,
-                                    size: 13,
-                                    weight: FontWeight.normal,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.clip,
-                                    fontFamily: 'Poppins',
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
 
                       
-                          ],
-                        ),
-                      ),
-                    ),
-                                        Spacer(),
+                        
+                      
+                      
+                    
 
                   ],
                 ),

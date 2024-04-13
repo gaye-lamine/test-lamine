@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:terappmobile/screens/auth/home/accueil.dart';
-import 'package:terappmobile/screens/auth/home/home.dart';
+import 'package:terappmobile/screens/home/accueil.dart';
+import 'package:terappmobile/screens/home/home.dart';
 import 'package:terappmobile/utils/app_colors.dart';
 import 'package:terappmobile/utils/googlefonts.dart';
 import 'package:terappmobile/utils/title_option.dart';
@@ -248,11 +248,11 @@ class _InfoPersoState extends State<InfoPerso> {
                         'Indiquer si vous êtes abonné(e)',
                         style: TextStyle(
                             color: Colors.black45,
-                            fontSize: 17,
+                            fontSize: 14,
                             fontFamily: "SFProDisplay",
                             fontWeight: FontWeight.bold),
                       ),
-                      CupertinoSwitch(
+                      Flexible(child: CupertinoSwitch(
                         value: switchValue,
                         activeColor: AppColors.beige,
                         onChanged: (bool value) {
@@ -261,9 +261,9 @@ class _InfoPersoState extends State<InfoPerso> {
                           });
 
                           print(switchValue);
-                        }
+                        })
                       )
-
+                     
                     ],
 
                   ),
