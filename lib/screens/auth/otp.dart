@@ -47,6 +47,7 @@ class _OtpState extends State<Otp> {
     var width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(

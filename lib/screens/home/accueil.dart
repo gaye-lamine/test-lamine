@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:terappmobile/models/card_info.dart';
 import 'package:terappmobile/models/voyage_info.dart';
 import 'package:terappmobile/screens/ajout_voyage/ajout_voyage.dart';
@@ -46,9 +47,9 @@ class _AccueilState extends State<Accueil> {
 
   void main() {
     // Assuming the audio file is located at 'path/to/audio/file.mp3'
-    File audioFile2 = File('path/to/audio/file.mp3');
-    File audioFile1 = File('path/to/audio/file.mp3');
-    File audioFile3 = File('path/to/audio/file.mp3');
+   // File audioFile2 = File('path/to/audio/file.mp3');
+    //File audioFile1 = File('path/to/audio/file.mp3');
+    //File audioFile3 = File('path/to/audio/file.mp3');
 
     List<CardInfo> cardInfoList = [
       CardInfo(
@@ -56,26 +57,26 @@ class _AccueilState extends State<Accueil> {
         title: 'À savoir !',
         description:
             'Aliquam eget purus sit malesuada tempor euismod. Aliquam eget purus sit malesuada tempor euismod.',
-        audioFile: audioFile1,
+       // audioFile: '',
       ),
       CardInfo(
         imageAsset: 'images/logoter.png',
         title: 'À savoir !',
         description:
             'Aliquam eget purus sit malesuada tempor euismod. Aliquam eget purus sit malesuada tempor euismod.',
-        audioFile: audioFile2,
+        //audioFile: audioFile2,
       ),
       CardInfo(
         imageAsset: 'images/logoter.png',
         title: 'À savoir !',
         description:
             'Aliquam eget purus sit malesuada tempor euismod. Aliquam eget purus sit malesuada tempor euismod.',
-        audioFile: audioFile3,
+        //audioFile: audioFile3,
       ),
     ];
 
     // Accessing the audio file for the first CardInfo object in the list
-    File firstCardAudioFile = cardInfoList[0].audioFile;
+    //File firstCardAudioFile = cardInfoList[0].audioFile;
 
     // Use the audio file as needed
     // ...

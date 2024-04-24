@@ -63,7 +63,11 @@ class _InfoPersoState extends State<InfoPerso> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Stack(
+      resizeToAvoidBottomInset: false,
+      body:
+      Stack(
+        
+        
         children: [
           Container(
             height: double.infinity,
