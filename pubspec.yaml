@@ -43,6 +43,10 @@ dependencies:
   web: 0.5.0
   timelines: ^0.1.0
   percent_indicator: ^4.2.3
+  http: ^1.1.2
+  provider: ^6.1.1
+
+
   
 
 
@@ -125,6 +129,7 @@ flutter:
     - images/profil2.png
     - images/abonne.png
     - images/modifypic.png
+    - audios/audio.mp3
    # - .png
 
 

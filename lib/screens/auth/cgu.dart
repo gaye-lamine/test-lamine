@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:terappmobile/provider/auth_provider.dart';
 import 'package:terappmobile/screens/auth/info_perso.dart';
 import 'package:terappmobile/utils/app_colors.dart';
 import 'package:terappmobile/utils/googlefonts.dart';
@@ -165,6 +167,9 @@ class _CguState extends State<Cgu> {
                                     onChanged: (bool? value) {
                                       setState(() {
                                         isChecked = value!;
+                                        final app = Provider.of<AuthProvider>(context, listen: false);
+                                        isChecked  = app.setCgu(value) ;
+
                                       });
                                     },
                                     shape: BeveledRectangleBorder(),
@@ -248,12 +253,6 @@ class _CguState extends State<Cgu> {
                         ],
                       ),
                     ),
-
-                      
-                        
-                      
-                      
-                    
 
                   ],
                 ),

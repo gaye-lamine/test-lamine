@@ -41,6 +41,8 @@ class _ProfileState extends State<Profile> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+
       body: Stack(
         children: [
           Container(

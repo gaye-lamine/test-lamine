@@ -1,22 +1,23 @@
 class AuthMobileResponse {
   bool status;
-  String data;
+  dynamic data; // Change the type to dynamic to handle both string and map
   String token;
   String message;
 
-  AuthMobileResponse({required this.status,required  this.data, required this.token,required  this.message});
+  AuthMobileResponse({
+    required this.status,
+    required this.data,
+    required this.token,
+    required this.message,
+  });
 
-   factory AuthMobileResponse.fromJson(Map<String, dynamic> json) {
-
+  factory AuthMobileResponse.fromJson(Map<String, dynamic> json) {
     return AuthMobileResponse(
-      status : json['status'],
-      data : json['data'],
-      token : json['token'],
-      message : json['message'],
-
+      status: json['status'],
+      data: json['data'], // Assign the data directly
+      token: json['token'],
+      message: json['message'],
     );
-     
-   
   }
 
   Map<String, dynamic> toJson() {

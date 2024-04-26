@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:terappmobile/models/page_model.dart';
+import 'package:terappmobile/models/request/authotp_request.dart';
+import 'package:terappmobile/provider/auth_provider.dart';
 import 'package:terappmobile/screens/auth/cgu.dart';
 import 'package:terappmobile/screens/auth/welcome.dart';
 import 'package:terappmobile/utils/app_colors.dart';
@@ -15,7 +18,6 @@ class Otp extends StatefulWidget {
 }
 
 class _OtpState extends State<Otp> {
-  late TextEditingController phoneNumberController = TextEditingController();
   bool isactive = false;
   String currentText = "";
   final formKey = GlobalKey<FormState>();
@@ -28,11 +30,24 @@ class _OtpState extends State<Otp> {
     });
   }
 
+  validationOtp() {
+    final app = Provider.of<AuthProvider>(context, listen: false);
+    var oldOtp = app.authcoderesponse!.data;
+    AuthOtpRequest authOtpRequest =
+        AuthOtpRequest(oldOtp: oldOtp, newOtp: otpCode);
+    print(' otp value $oldOtp , entered otp $otpCode');
+    var result = app.validationOtpProvider(context, authOtpRequest);
+  }
+
   @override
   initState() {
     super.initState();
     //phoneNumberController = TextEditingController();
     //otpCode.addListener(updateActiveState);
+    var app = Provider.of<AuthProvider>(context, listen: false);
+    var phone = app.authMobileRequest!.phone;
+    var otp = app.authcoderesponse!.data;
+    print('------  numer = $phone , otp = $otp  ----------');
     print(isactive);
   }
 
@@ -129,8 +144,16 @@ class _OtpState extends State<Otp> {
                   SizedBox(
                     height: 40,
                   ),
-                  TitleOption(data: 'Veuillez entrer le code reçu par sms au +221 7* *** ** 67', color: Colors.black45, size: 18, weight: FontWeight.normal ,maxLines: 2,textAlign: TextAlign.center,),
-                   SizedBox(
+                  TitleOption(
+                    data:
+                        'Veuillez entrer le code reçu par sms au +221 7* *** ** 67',
+                    color: Colors.black45,
+                    size: 18,
+                    weight: FontWeight.normal,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
                     height: 20,
                   ),
                   Align(
@@ -158,7 +181,7 @@ class _OtpState extends State<Otp> {
                             ),
                           ),
                           onCompleted: (value) {
-                          setState(() {
+                            setState(() {
                               otpCode = value;
                               isactive = otpCode!.length == 6;
                             });
@@ -171,14 +194,16 @@ class _OtpState extends State<Otp> {
                   SizedBox(
                     height: 50,
                   ),
-                 
                   Align(
                     alignment: Alignment.center,
                     child: ElevatedButton(
-                      onPressed: isactive ? () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                                  builder: ((context) => Cgu())));
-                      } : null,
+                      onPressed: isactive
+                          ? () {
+                              validationOtp();
+                              /* Navigator.of(context).push(MaterialPageRoute(
+                                  builder: ((context) => Cgu()))); */
+                            }
+                          : null,
                       style: ElevatedButton.styleFrom(
                         //onSurface: AppColors.marron,
                         backgroundColor: AppColors.marron,
@@ -188,19 +213,18 @@ class _OtpState extends State<Otp> {
                           borderRadius: BorderRadius.circular(6.0),
                         ),
                       ),
-                      child:  Center(
-                          child: Text(
-                            'Vérifier le code',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                      child: Center(
+                        child: Text(
+                          'Vérifier le code',
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),
-                  
-                   SizedBox(
+                  ),
+                  SizedBox(
                     height: 20,
                   ),
-                   Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       TitleText(
@@ -226,7 +250,6 @@ class _OtpState extends State<Otp> {
                       )
                     ],
                   ),
-                 
                 ],
               ),
             ),

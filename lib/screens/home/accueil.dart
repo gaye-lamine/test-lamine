@@ -45,42 +45,7 @@ class _AccueilState extends State<Accueil> {
     'Gare de Colobane'
   ];
 
-  void main() {
-    // Assuming the audio file is located at 'path/to/audio/file.mp3'
-   // File audioFile2 = File('path/to/audio/file.mp3');
-    //File audioFile1 = File('path/to/audio/file.mp3');
-    //File audioFile3 = File('path/to/audio/file.mp3');
-
-    List<CardInfo> cardInfoList = [
-      CardInfo(
-        imageAsset: 'images/logoter.png',
-        title: 'À savoir !',
-        description:
-            'Aliquam eget purus sit malesuada tempor euismod. Aliquam eget purus sit malesuada tempor euismod.',
-       // audioFile: '',
-      ),
-      CardInfo(
-        imageAsset: 'images/logoter.png',
-        title: 'À savoir !',
-        description:
-            'Aliquam eget purus sit malesuada tempor euismod. Aliquam eget purus sit malesuada tempor euismod.',
-        //audioFile: audioFile2,
-      ),
-      CardInfo(
-        imageAsset: 'images/logoter.png',
-        title: 'À savoir !',
-        description:
-            'Aliquam eget purus sit malesuada tempor euismod. Aliquam eget purus sit malesuada tempor euismod.',
-        //audioFile: audioFile3,
-      ),
-    ];
-
-    // Accessing the audio file for the first CardInfo object in the list
-    //File firstCardAudioFile = cardInfoList[0].audioFile;
-
-    // Use the audio file as needed
-    // ...
-  }
+  
 
   void gareModal() {
     showModalBottomSheet(
@@ -366,9 +331,9 @@ class _AccueilState extends State<Accueil> {
     carteController.addListener(updateActivateState);
 
     // Assuming the audio file is located at 'path/to/audio/file.mp3'
-    File audioFile2 = File('path/to/audio/file.mp3');
-    File audioFile1 = File('path/to/audio/file.mp3');
-    File audioFile3 = File('path/to/audio/file.mp3');
+    File audioFile2 = File('audio/audio.mp3');
+    File audioFile1 = File('audio/audio.mp3');
+    File audioFile3 = File('audio/audio.mp3');
 
     voyageInfoList = [
       VoyageInfo(
@@ -670,48 +635,51 @@ class _AccueilState extends State<Accueil> {
                                         )
                                       ],
                                     
-                                      /*  Column(
-                                      children: [
-                                        Image.asset(cardInfo.imageAsset),
-                                        Text(cardInfo.title),
-                                        Text(cardInfo.description),
-                                        // Other card content
-                                      ],
-                                    ), */
+                                    
                                     ),
-                                      Flexible(
-                                        //height: 80,
-                                        //width: 50,
-                                        child: VoiceMessageView(
-                                          backgroundColor: Colors.transparent,
-                                          circlesColor: AppColors.marron,
-                                          activeSliderColor: AppColors.marron,
-                                          notActiveSliderColor:
-                                              Colors.transparent,
-                                          size: 39,
-                                          controller: VoiceController(
-                                            audioSrc:
-                                                cardInfo.audioFile.toString(),
-                                            maxDuration:
-                                                const Duration(seconds: 10),
-                                            isFile: false,
-                                            onComplete: () {
-                                              /// do something on complete
-                                            },
-                                            onPause: () {
-                                              /// do something on pause
-                                            },
-                                            onPlaying: () {
-                                              /// do something on playing
-                                            },
-                                            onError: (err) {
-                                              /// do somethin on error
-                                            },
-                                          ),
-                                          innerPadding: 12,
-                                          cornerRadius: 20,
+                                    
+                                    
+                                       // color: Colors.red,
+                                        /* child: Container(
+                                            //height: 80,
+                                           width: 280, */
+                                    Flexible(
+                                      child: VoiceMessageView(
+                                        backgroundColor: Colors.yellow,
+                                        circlesColor: AppColors.marron,
+                                        activeSliderColor: AppColors.marron,
+                                        
+                                        
+                                        notActiveSliderColor:
+                                            Colors.transparent,
+                                        size: 39,
+                                        controller: VoiceController(
+                                          audioSrc:
+                                              cardInfo.audioFile.toString(),
+                                          maxDuration:
+                                              const Duration(seconds: 10),
+                                          isFile: false,
+                                          onComplete: () {
+                                            /// do something on complete
+                                          },
+                                          onPause: () {
+                                            /// do something on pause
+                                          },
+                                          onPlaying: () {
+                                            /// do something on playing
+                                          },
+                                          onError: (err) {
+                                            /// do somethin on error
+                                          },
                                         ),
+                                        innerPadding: 12,
+                                        
+                                        cornerRadius: 5,
                                       ),
+                                    ),
+                                          
+                                      
+                                    
                                     
 
                                   ],

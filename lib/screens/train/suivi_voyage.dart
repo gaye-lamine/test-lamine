@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:terappmobile/models/choice_train.dart';
 import 'package:terappmobile/screens/home/accueil.dart';
+import 'package:terappmobile/screens/home/home.dart';
 import 'package:terappmobile/utils/app_colors.dart';
 import 'package:terappmobile/utils/googlefonts.dart';
 import 'package:terappmobile/utils/title_option.dart';
@@ -76,7 +77,7 @@ class _SuiviVoyageState extends State<SuiviVoyage> {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(
-                          MaterialPageRoute(builder: ((context) => Accueil())));
+                          MaterialPageRoute(builder: ((context) => Homescreencustomer())));
                     },
                     child: Container(
                       width: 45,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:terappmobile/provider/auth_provider.dart';
 import 'package:terappmobile/screens/auth/cgu.dart';
 import 'package:terappmobile/screens/auth/deliverytrack.dart';
 import 'package:terappmobile/screens/home/abonnement.dart';
@@ -24,14 +26,15 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      //title: 'Flutter Demo',
-       theme: ThemeData(
-       // colorScheme: AppColors.marron,
-        useMaterial3: true,
+     return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        // ...
+        home: SignUp(),
       ),
-      home: SplashScreen(),
     );
   }
 }

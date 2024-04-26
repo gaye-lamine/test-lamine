@@ -1,17 +1,14 @@
 class AuthMobileRequest {
   AuthMobileRequest({
-    required this.phoneNumber,
+    required this.phone,
   });
-
-  String? phoneNumber;
-
+  String? phone;
   factory AuthMobileRequest.fromJson(Map<String, dynamic> json) {
     return AuthMobileRequest(
-      phoneNumber: json["phone_number"],
+      phone: json["phone"],
     );
   }
-
   Map<String, dynamic> toJson() => {
-    "phone_number": phoneNumber,
-    };
+    "phone": phone,
+  };
 }
