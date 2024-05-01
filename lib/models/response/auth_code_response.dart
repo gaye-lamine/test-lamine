@@ -1,5 +1,5 @@
 class AuthMobileResponse {
-  bool status;
+  int status;
   dynamic data; // Change the type to dynamic to handle both string and map
   String token;
   String message;

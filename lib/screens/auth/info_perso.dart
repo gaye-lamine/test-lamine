@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:terappmobile/models/request/auth_register_request.dart';
+import 'package:terappmobile/provider/auth_provider.dart';
 import 'package:terappmobile/screens/home/accueil.dart';
 import 'package:terappmobile/screens/home/home.dart';
+import 'package:terappmobile/services/auth_service.dart';
 import 'package:terappmobile/utils/app_colors.dart';
 import 'package:terappmobile/utils/googlefonts.dart';
 import 'package:terappmobile/utils/title_option.dart';
@@ -42,6 +46,7 @@ class _InfoPersoState extends State<InfoPerso> {
     carteController.dispose();
     super.dispose();
   }
+
   void updateActivateState() {
     bool isActive = false;
 
@@ -57,6 +62,19 @@ class _InfoPersoState extends State<InfoPerso> {
     });
   }
 
+  void register() {
+    final app = Provider.of<AuthProvider>(context, listen: false);
+    var oldOtp = app.authcoderesponse!.data;
+    var phone = app.authMobileRequest!.phone!;
+    AuthRegisterRequest authRegisterRequest = AuthRegisterRequest(
+        fullname: nomController.text.trim(),
+        otp: oldOtp,
+        adress: addressController.text.trim(),
+        phone: phone,
+        cgu: true,
+        isSubscribe: switchValue);
+    app.registerProvider(context, authRegisterRequest);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +82,7 @@ class _InfoPersoState extends State<InfoPerso> {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body:
-      Stack(
-        
-        
+      body: Stack(
         children: [
           Container(
             height: double.infinity,
@@ -246,7 +261,7 @@ class _InfoPersoState extends State<InfoPerso> {
                     ),
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween ,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Indiquer si vous êtes abonné(e)',
@@ -256,95 +271,95 @@ class _InfoPersoState extends State<InfoPerso> {
                             fontFamily: "SFProDisplay",
                             fontWeight: FontWeight.bold),
                       ),
-                      Flexible(child: CupertinoSwitch(
-                        value: switchValue,
-                        activeColor: AppColors.beige,
-                        onChanged: (bool value) {
-                          setState(() {
-                            switchValue = value ?? false;
-                          });
+                      Flexible(
+                          child: CupertinoSwitch(
+                              value: switchValue,
+                              activeColor: AppColors.beige,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  switchValue = value ?? false;
+                                });
 
-                          print(switchValue);
-                        })
-                      )
-                     
+                                print(switchValue);
+                              }))
                     ],
-
                   ),
-                  (switchValue == true) 
-                  ?Container(
-                    width: double.infinity,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: AppColors.beige ,
-                      borderRadius: BorderRadius.circular(8)
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20 , vertical: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          RichText(
-                            textAlign: TextAlign.start,
-                            text: TextSpan(
+                  (switchValue == true)
+                      ? Container(
+                          width: double.infinity,
+                          height: 120,
+                          decoration: BoxDecoration(
+                              color: AppColors.beige,
+                              borderRadius: BorderRadius.circular(8)),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextSpan(
-                                  text: 'Numéro de votre carte  ',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
+                                RichText(
+                                  textAlign: TextAlign.start,
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'Numéro de votre carte  ',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 16),
+                                      ),
+                                      TextSpan(
+                                        text: 'SamaTER',
+                                        style: TextStyle(
+                                            color: AppColors.beige,
+                                            fontSize: 16,
+                                            fontFamily: "SFProDisplay",
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                TextSpan(
-                                  text: 'SamaTER',
-                                  style: TextStyle(
-                                      color: AppColors.beige,
-                                      fontSize: 16,
-                                      fontFamily: "SFProDisplay",
-                                      fontWeight: FontWeight.bold),
+                                SizedBox(
+                                  height: 5,
                                 ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 5,),
-                          SizedBox(
-                            height: 50,
-                            child: TextField(
-                              controller: carteController,
-                              onChanged: (value) {
-                                //updateActivateState();
-                              },
-                              decoration: InputDecoration(
-                                //prefixIcon: Image.asset('images/location.png'),
-                                /* Icon(
+                                SizedBox(
+                                  height: 50,
+                                  child: TextField(
+                                    controller: carteController,
+                                    onChanged: (value) {
+                                      //updateActivateState();
+                                    },
+                                    decoration: InputDecoration(
+                                      //prefixIcon: Image.asset('images/location.png'),
+                                      /* Icon(
                                   Icons.location_city,
                                   size: 25,
                                   color: Colors.b,
                                 ), */
-                                //suffixIcon: Image.asset('images/location2.png'),
-                               // hintText: 'Choisir l’adresse',
-                                //prefixText: "Ex: John Doe",
-                                hintStyle: TextStyle(fontSize: 16),
-                                labelStyle: TextStyle(color: Colors.black38),
-                                fillColor:Colors.white,
-                                //focusColor: Colors.grey,
-                                filled: true,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(6),
-                                  borderSide: BorderSide(
-                                      width: 3.0, color: Colors.white),
+                                      //suffixIcon: Image.asset('images/location2.png'),
+                                      // hintText: 'Choisir l’adresse',
+                                      //prefixText: "Ex: John Doe",
+                                      hintStyle: TextStyle(fontSize: 16),
+                                      labelStyle:
+                                          TextStyle(color: Colors.black38),
+                                      fillColor: Colors.white,
+                                      //focusColor: Colors.grey,
+                                      filled: true,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(6),
+                                        borderSide: BorderSide(
+                                            width: 3.0, color: Colors.white),
+                                      ),
+                                    ),
+                                    keyboardType: TextInputType.emailAddress,
+                                  ),
                                 ),
-                              ),
-                              keyboardType: TextInputType.emailAddress,
+                              ],
                             ),
                           ),
-
-                            
-                        ],
-
-                      ),
-                    ),
-                  ) 
-                  :SizedBox(height: 1,) ,
+                        )
+                      : SizedBox(
+                          height: 1,
+                        ),
                   SizedBox(
                     height: 20,
                   ),
@@ -353,22 +368,23 @@ class _InfoPersoState extends State<InfoPerso> {
                       elevation: 0,
                       tapTargetSize: MaterialTapTargetSize
                           .shrinkWrap, // Remove click animation
-                     // onPrimary: Color.fromRGBO(245, 245, 245, 1),
+                      // onPrimary: Color.fromRGBO(245, 245, 245, 1),
                       backgroundColor: AppColors.marron,
                       minimumSize: Size(double.infinity, 50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6.0),
                       ),
                     ),
-                    onPressed:
-                    
-                     isactive
+                    onPressed: isactive
                         ? () {
                             // Add your onPressed logic here
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Homescreencustomer()));
+
+                            register();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Homescreencustomer()));
                           }
                         : null,
                     child: TitleOption(
@@ -381,9 +397,6 @@ class _InfoPersoState extends State<InfoPerso> {
                       // fontFamily: 'SFProDisplay',
                     ),
                   ),
-
-                          
-                  
                 ],
               ),
             ),

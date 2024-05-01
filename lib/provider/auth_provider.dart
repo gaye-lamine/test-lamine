@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:terappmobile/models/request/auth_code_request.dart';
+import 'package:terappmobile/models/request/auth_register_request.dart';
 import 'package:terappmobile/models/request/authotp_request.dart';
 import 'package:terappmobile/models/response/auth_code_response.dart';
+import 'package:terappmobile/models/response/auth_register_response.dart';
 import 'package:terappmobile/screens/auth/cgu.dart';
 import 'package:terappmobile/screens/auth/otp.dart';
 import 'package:terappmobile/screens/home/accueil.dart';
@@ -11,7 +13,9 @@ import 'package:terappmobile/services/auth_service.dart';
 class AuthProvider extends ChangeNotifier {
   AuthMobileRequest? _authMobileRequest;
   AuthMobileResponse? _authMobileResponse;
-  
+  AuthRegisterResponse? _authRegisterResponse;
+
+  AuthRegisterResponse? get authRegisterResponse => _authRegisterResponse;
   AuthMobileRequest? get authMobileRequest => _authMobileRequest;
   AuthMobileResponse? get authcoderesponse => _authMobileResponse;
 
@@ -31,14 +35,14 @@ class AuthProvider extends ChangeNotifier {
     try {
       _authMobileRequest = authMobileRequest;
       _authMobileResponse = response;
-      if (response?.status == false) {
+      if (response?.status == 1) {
         print('user n exist pas');
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Otp()),
         );
         notifyListeners();
-      } else if (response?.status == true) {
+      } else if (response?.status == 0) {
         print('----- user exist -----');
         Navigator.push(
           context,
@@ -61,7 +65,7 @@ class AuthProvider extends ChangeNotifier {
           .setToken(token); */ // Update token using TokenProvider
       //print('token value $token');
 
-      if (response!.status != null && response.status == true) {
+      if (response!.status != null && response.status == 0) {
         print(response.status);
         Navigator.push(
           context,
@@ -72,6 +76,31 @@ class AuthProvider extends ChangeNotifier {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("le code saisit est invalide"),
+            backgroundColor: Colors.red,
+          ),
+        );
+        print('erreur de verification VALIDATION');
+      }
+    } catch (e) {
+      throw Exception('fail checking the otp code number:$e');
+    }
+  }
+
+  Future registerProvider(
+      BuildContext context, AuthRegisterRequest authRegisterRequest) async {
+    try {
+      final response = await AuthServices.registerService(authRegisterRequest);
+      _authRegisterResponse = response;
+      if (response!.status == 0) {
+         Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Accueil()),
+        );
+        return response;
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Erreur lorS de l 'inscrition"),
             backgroundColor: Colors.red,
           ),
         );

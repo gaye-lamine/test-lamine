@@ -167,8 +167,8 @@ class _CguState extends State<Cgu> {
                                     onChanged: (bool? value) {
                                       setState(() {
                                         isChecked = value!;
-                                        final app = Provider.of<AuthProvider>(context, listen: false);
-                                        isChecked  = app.setCgu(value) ;
+                                        //final app = Provider.of<AuthProvider>(context, listen: false);
+                                        //isChecked  = app.setCgu(value) ;
 
                                       });
                                     },

@@ -34,7 +34,7 @@
  */
 
 class AuthOtpResponse {
-  bool status;
+  int status;
   List<dynamic>? data;
   String token;
   String message;
