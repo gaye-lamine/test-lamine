@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:terappmobile/models/request/auth_code_request.dart';
@@ -10,16 +12,19 @@ import 'package:terappmobile/screens/auth/otp.dart';
 import 'package:terappmobile/screens/home/accueil.dart';
 import 'package:terappmobile/screens/home/home.dart';
 import 'package:terappmobile/services/auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider extends ChangeNotifier {
   AuthMobileRequest? _authMobileRequest;
   AuthMobileResponse? _authMobileResponse;
   AuthRegisterResponse? _authRegisterResponse;
 
-  //AuthRegisterResponse? get _authRegisterResponse => _authRegisterResponse;
-
+  AuthRegisterResponse? get authRegisterResponse => _authRegisterResponse;
   AuthMobileRequest? get authMobileRequest => _authMobileRequest;
   AuthMobileResponse? get authcoderesponse => _authMobileResponse;
+
+  bool _isSignedIn = false;
+  bool get isSignedIn => _isSignedIn;
 
   late bool _cgu;
   bool get cgu => _cgu;
@@ -27,6 +32,54 @@ class AuthProvider extends ChangeNotifier {
     _cgu = value;
     notifyListeners();
   }
+
+  /* ------------------- Shared Preferences  -------------------*/
+
+  /* check if user is signed in */
+  void checksignin() async {
+    final SharedPreferences s = await SharedPreferences.getInstance();
+    _isSignedIn = s.getBool("is_signedin") ?? false;
+    notifyListeners();
+  }
+
+  /* save user to shared preferences */
+  Future saveUserToSP(AuthRegisterResponse data) async {
+    SharedPreferences s = await SharedPreferences.getInstance();
+    s.setBool("is_signedin", true);
+    s.setString("user_model", jsonEncode(data));
+    notifyListeners();
+  }
+
+  /* get user to shared preferences */
+  Future<AuthRegisterResponse?> getUserFromSP() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String data = prefs.getString("user_model") ?? "";
+      if (data.isNotEmpty) {
+        Map<String, dynamic> jsonData = jsonDecode(data);
+        AuthRegisterResponse? userResponse =
+            AuthRegisterResponse.fromJson(jsonData);
+        print('Retrieved user data from shared preferences: $userResponse');
+        return userResponse;
+      } else {
+        print('No user data found in shared preferences');
+        return null;
+      }
+    } catch (e) {
+      print('Error retrieving user data from shared preferences: $e');
+      return null;
+    }
+  }
+
+  /* Future<AuthRegisterResponse?> getUserFromSP() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String data = prefs.getString("user_model") ?? "";
+    if (data.isNotEmpty) {
+      Map<String, dynamic> jsonData = jsonDecode(data);
+      return AuthRegisterResponse.fromJson(jsonData);
+    }
+    return null;
+  } */
 
   /* -------------------     checkPhoneNumberProvider   -------------------*/
   Future<void> checkPhoneNumberProvider(
@@ -94,6 +147,10 @@ class AuthProvider extends ChangeNotifier {
       final response = await AuthServices.registerService(authRegiserRequest);
 
       if (response != null && response.status != null && response.status == 0) {
+        _authRegisterResponse = response;
+        saveUserToSP(response);
+        //var username = await getUserFromSP().then((value) => null);
+        
         print(response.status);
         Navigator.push(
           context,
@@ -113,6 +170,4 @@ class AuthProvider extends ChangeNotifier {
       throw Exception('Failed checking the register number: $e');
     }
   }
-
-
-  }
+}

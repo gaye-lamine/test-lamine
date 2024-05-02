@@ -45,6 +45,7 @@ dependencies:
   percent_indicator: ^4.2.3
   http: ^1.1.2
   provider: ^6.1.1
+  shared_preferences: ^2.2.3
 
 
   

@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:terappmobile/models/card_info.dart';
 import 'package:terappmobile/models/voyage_info.dart';
+import 'package:terappmobile/provider/auth_provider.dart';
 import 'package:terappmobile/screens/ajout_voyage/ajout_voyage.dart';
 import 'package:terappmobile/screens/train/suivi_voyage.dart';
 import 'package:terappmobile/screens/train/train_voyage.dart';
@@ -21,14 +23,9 @@ class Accueil extends StatefulWidget {
 }
 
 class _AccueilState extends State<Accueil> {
-  bool isChecked = false;
-  late TextEditingController nomController;
-  late TextEditingController addressController;
-  late TextEditingController carteController;
+  String userName = "";
 
-  bool isactive = false;
-  bool switchValue = false;
-
+  String fullname = '';
   /* List<CardInfo> cardinfo = [
     CardInfo(imageAsset: 'images/logoter.png', title: 'À savoir !', description: 'Aliquam eget purus sit malesuada tempor euismod. Aliquam eget purus sit malesuada tempor euismod.', audioFile: audioFile)
   ]; */
@@ -44,8 +41,6 @@ class _AccueilState extends State<Accueil> {
     'Gare de Hann',
     'Gare de Colobane'
   ];
-
-  
 
   void gareModal() {
     showModalBottomSheet(
@@ -229,7 +224,9 @@ class _AccueilState extends State<Accueil> {
                     maxLines: 3,
                     textAlign: TextAlign.center,
                     weight: FontWeight.w300),
-                SizedBox(height: 40,) ,
+                SizedBox(
+                  height: 40,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -255,10 +252,10 @@ class _AccueilState extends State<Accueil> {
                         width: MediaQuery.of(context).size.width / 2 - 20,
                         height: 50,
                         onPressed: () {
-                           Navigator.push(
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AjoutVoyage())); 
+                                  builder: (context) => AjoutVoyage()));
                         }),
                   ],
                 ),
@@ -319,16 +316,38 @@ class _AccueilState extends State<Accueil> {
         );
   }
 
+  Future<void> getUserFromSP() async {
+    try {
+      
+       final value = await Provider.of<AuthProvider>(context, listen: false)
+          .getUserFromSP();
+      if (value != null) {
+        print('Retrieved user data: $value');
+        setState(() {
+          if (value.data != null) {
+            userName = value.data!.fullname!;
+            print('---------- username = $userName -------------');
+          } else {
+            print('User data is null');
+          }
+        });
+      } else {
+        print('User data not found in shared preferences');
+      } 
+    } catch (e) {
+      print('Error retrieving user data: $e');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    nomController = TextEditingController();
-    addressController = TextEditingController();
-    carteController = TextEditingController();
+    fullname = Provider.of<AuthProvider>(context, listen: false)
+        .authRegisterResponse!
+        .data!
+        .fullname!;
 
-    nomController.addListener(updateActivateState);
-    addressController.addListener(updateActivateState);
-    carteController.addListener(updateActivateState);
+    getUserFromSP();
 
     // Assuming the audio file is located at 'path/to/audio/file.mp3'
     File audioFile2 = File('audio/audio.mp3');
@@ -390,25 +409,8 @@ class _AccueilState extends State<Accueil> {
   @override
   void dispose() {
     // TODO: implement dispose
-    nomController.dispose();
-    addressController.dispose();
-    carteController.dispose();
+
     super.dispose();
-  }
-
-  void updateActivateState() {
-    bool isActive = false;
-
-    if (!switchValue) {
-      isActive =
-          nomController.text.isNotEmpty && addressController.text.isNotEmpty;
-    } else {
-      isActive = carteController.text.isNotEmpty;
-    }
-
-    setState(() {
-      isactive = isActive;
-    });
   }
 
   @override
@@ -486,7 +488,7 @@ class _AccueilState extends State<Accueil> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TitleOption(
-                              data: 'Bonjour Mouhamadou',
+                              data: 'Bonjour $userName',
                               color: Colors.white,
                               size: 18,
                               weight: FontWeight.w600),
@@ -594,12 +596,14 @@ class _AccueilState extends State<Accueil> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Container(
                                           width: 70,
                                           height: 46,
-                                          color: Color.fromRGBO(245, 245, 245, 1),
+                                          color:
+                                              Color.fromRGBO(245, 245, 245, 1),
                                           child: Center(
                                             child: Image.asset(
                                               'images/logoter.png',
@@ -628,19 +632,16 @@ class _AccueilState extends State<Accueil> {
                                                   size: 12,
                                                   textAlign: TextAlign.start,
                                                   weight: FontWeight.w300),
-                                             
+
                                               // Other card content
                                             ],
                                           ),
                                         )
                                       ],
-                                    
-                                    
                                     ),
-                                    
-                                    
-                                       // color: Colors.red,
-                                        /* child: Container(
+
+                                    // color: Colors.red,
+                                    /* child: Container(
                                             //height: 80,
                                            width: 280, */
                                     Flexible(
@@ -648,8 +649,6 @@ class _AccueilState extends State<Accueil> {
                                         backgroundColor: Colors.yellow,
                                         circlesColor: AppColors.marron,
                                         activeSliderColor: AppColors.marron,
-                                        
-                                        
                                         notActiveSliderColor:
                                             Colors.transparent,
                                         size: 39,
@@ -673,15 +672,9 @@ class _AccueilState extends State<Accueil> {
                                           },
                                         ),
                                         innerPadding: 12,
-                                        
                                         cornerRadius: 5,
                                       ),
                                     ),
-                                          
-                                      
-                                    
-                                    
-
                                   ],
                                 ),
                               ),
