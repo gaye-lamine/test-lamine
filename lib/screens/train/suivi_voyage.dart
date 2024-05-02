@@ -77,7 +77,7 @@ class _SuiviVoyageState extends State<SuiviVoyage> {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(
-                          MaterialPageRoute(builder: ((context) => Homescreencustomer())));
+                          MaterialPageRoute(builder: ((context) => Home())));
                     },
                     child: Container(
                       width: 45,

@@ -380,11 +380,11 @@ class _InfoPersoState extends State<InfoPerso> {
                             // Add your onPressed logic here
 
                             register();
-                            Navigator.push(
+                            /* Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        Homescreencustomer()));
+                                        Homescreencustomer())); */
                           }
                         : null,
                     child: TitleOption(

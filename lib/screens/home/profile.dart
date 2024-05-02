@@ -70,7 +70,7 @@ class _ProfileState extends State<Profile> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Homescreencustomer()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Home()));
                     },
                     child: Container(
                       width: 45,

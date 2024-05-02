@@ -146,7 +146,7 @@ class _OtpState extends State<Otp> {
                   ),
                   TitleOption(
                     data:
-                        'Veuillez entrer le code reçu par sms au +221 7* *** ** 67',
+                        'Veuillez entrer le code reçu par sms au +221 ${Provider.of<AuthProvider>(context, listen: false).authMobileRequest!.phone}',
                     color: Colors.black45,
                     size: 18,
                     weight: FontWeight.normal,

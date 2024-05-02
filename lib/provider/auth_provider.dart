@@ -8,6 +8,7 @@ import 'package:terappmobile/models/response/auth_register_response.dart';
 import 'package:terappmobile/screens/auth/cgu.dart';
 import 'package:terappmobile/screens/auth/otp.dart';
 import 'package:terappmobile/screens/home/accueil.dart';
+import 'package:terappmobile/screens/home/home.dart';
 import 'package:terappmobile/services/auth_service.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -15,7 +16,8 @@ class AuthProvider extends ChangeNotifier {
   AuthMobileResponse? _authMobileResponse;
   AuthRegisterResponse? _authRegisterResponse;
 
-  AuthRegisterResponse? get authRegisterResponse => _authRegisterResponse;
+  //AuthRegisterResponse? get _authRegisterResponse => _authRegisterResponse;
+
   AuthMobileRequest? get authMobileRequest => _authMobileRequest;
   AuthMobileResponse? get authcoderesponse => _authMobileResponse;
 
@@ -87,27 +89,30 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future registerProvider(
-      BuildContext context, AuthRegisterRequest authRegisterRequest) async {
+      BuildContext context, AuthRegisterRequest authRegiserRequest) async {
     try {
-      final response = await AuthServices.registerService(authRegisterRequest);
-      _authRegisterResponse = response;
-      if (response!.status == 0) {
-         Navigator.push(
+      final response = await AuthServices.registerService(authRegiserRequest);
+
+      if (response != null && response.status != null && response.status == 0) {
+        print(response.status);
+        Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Accueil()),
+          MaterialPageRoute(builder: (context) => Home()),
         );
         return response;
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text("Erreur lorS de l 'inscrition"),
+            content: Text("Erreur lors du register"),
             backgroundColor: Colors.red,
           ),
         );
-        print('erreur de verification VALIDATION');
+        print('Erreur de vérification VALIDATION');
       }
     } catch (e) {
-      throw Exception('fail checking the otp code number:$e');
+      throw Exception('Failed checking the register number: $e');
     }
   }
-}
+
+
+  }
