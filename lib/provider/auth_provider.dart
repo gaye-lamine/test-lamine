@@ -30,7 +30,7 @@ class AuthProvider extends ChangeNotifier {
   String get fullname => _fullname!;
 
   String? _otp;
-  String get otp => _fullname!;
+  String get otp => _otp!;
 
 
   late bool _cgu;
@@ -139,6 +139,7 @@ class AuthProvider extends ChangeNotifier {
 
       if (response?.status == 1) {
         print('user n exist pas');
+        _otp = response!.data!.otp! ;
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Otp()),
@@ -148,10 +149,11 @@ class AuthProvider extends ChangeNotifier {
         //saveUserToSP(response);
         if (response != null &&
             response.data != null &&
-            response.data is DataMobile ) {
-          _fullname = response.data.fullname;
+            response.data is DataMobile) {
+          _fullname = response.data!.fullname;
         }
         print('----- user exist -----');
+        
         /* // Save user data to SharedPreferences
         if (response?.data != null) {
           saveUserToSP(response!.data);

@@ -32,9 +32,9 @@ class _OtpState extends State<Otp> {
 
   validationOtp() {
     final app = Provider.of<AuthProvider>(context, listen: false);
-    var oldOtp = app.authcoderesponse!.data;
+    var oldOtp = app.otp!;
     AuthOtpRequest authOtpRequest =
-        AuthOtpRequest(oldOtp: oldOtp, newOtp: otpCode);
+        AuthOtpRequest(oldOtp: oldOtp , newOtp: otpCode);
     print(' otp value $oldOtp , entered otp $otpCode');
     var result = app.validationOtpProvider(context, authOtpRequest);
   }
@@ -42,11 +42,12 @@ class _OtpState extends State<Otp> {
   @override
   initState() {
     super.initState();
-    //phoneNumberController = TextEditingController();
-    //otpCode.addListener(updateActiveState);
     var app = Provider.of<AuthProvider>(context, listen: false);
     var phone = app.authMobileRequest!.phone;
-    var otp = app.authcoderesponse!.data;
+    //var otp = app.authcoderesponse!.data.toString();
+    var otp =
+        app.authcoderesponse!.data!.otp;
+
     print('------  numer = $phone , otp = $otp  ----------');
     print(isactive);
   }

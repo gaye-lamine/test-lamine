@@ -1,44 +1,49 @@
 class DataMobile {
   int? id;
   String? fullname;
-  String? adress;
+  String? address;
   String? phone;
   int? isSubscribe;
   int? cgu;
+  String? otp;
 
   DataMobile({
     required this.id,
     required this.fullname,
-    required this.adress,
+    required this.address,
     required this.phone,
     required this.isSubscribe,
     required this.cgu,
+    this.otp,
   });
 
   DataMobile.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     fullname = json['fullname'];
-    adress = json['adress'];
+    address = json['address'];
     phone = json['phone'];
     isSubscribe = json['isSubscribe'];
     cgu = json['cgu'];
+    otp = json['otp'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['id'] = id;
-    data['fullname'] = fullname;
-    data['adress'] = adress;
-    data['phone'] = phone;
-    data['isSubscribe'] = isSubscribe;
-    data['cgu'] = cgu;
+    final Map<String, dynamic> data = {
+      'id': id,
+      'fullname': fullname,
+      'address': address,
+      'phone': phone,
+      'isSubscribe': isSubscribe,
+      'cgu': cgu,
+      'otp': otp,
+    };
     return data;
   }
 }
 
 class AuthMobileResponse {
   int? status;
-  dynamic data; // Can be either a String or a Data object
+  DataMobile? data; // Can be either a String or a Data object
   String? token;
   String? message;
 
@@ -53,17 +58,22 @@ class AuthMobileResponse {
     final int? status = json['status'];
     final dynamic data = json['data'];
 
-    // Check if data is a string or a map
     if (data is String) {
-      // If data is a string, use it directly
       return AuthMobileResponse(
         status: status,
-        data: data,
+        data: DataMobile(
+          id: null,
+          fullname: null,
+          address: null,
+          phone: null,
+          isSubscribe: null,
+          cgu: null,
+          otp: null,
+        ),
         token: json['token'],
         message: json['message'],
       );
     } else if (data is Map<String, dynamic>) {
-      // If data is a map, parse it into a Data object
       return AuthMobileResponse(
         status: status,
         data: DataMobile.fromJson(data),
@@ -76,13 +86,9 @@ class AuthMobileResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    if (this.data is DataMobile) {
-      // If data is a Data object, convert it to JSON
-      data['data'] = (this.data as DataMobile).toJson();
-    } else {
-      // If data is a string, use it directly
-      data['data'] = this.data;
+    final Map<String, dynamic> data = {};
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
     }
     return {
       'status': this.status,

@@ -64,7 +64,7 @@ class _InfoPersoState extends State<InfoPerso> {
 
   void register() {
     final app = Provider.of<AuthProvider>(context, listen: false);
-    var oldOtp = app.authcoderesponse!.data;
+    var oldOtp = app.authcoderesponse!.data!.otp!;
     var phone = app.authMobileRequest!.phone!;
     AuthRegisterRequest authRegisterRequest = AuthRegisterRequest(
         fullname: nomController.text.trim(),
