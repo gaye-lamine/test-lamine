@@ -316,7 +316,7 @@ class _AccueilState extends State<Accueil> {
         );
   }
 
-  Future<void> getUserFromSP() async {
+  /* Future<void> getUserFromSP() async {
     try {
       
        final value = await Provider.of<AuthProvider>(context, listen: false)
@@ -339,15 +339,18 @@ class _AccueilState extends State<Accueil> {
     }
   }
 
+  */
   @override
   void initState() {
     super.initState();
-    fullname = Provider.of<AuthProvider>(context, listen: false)
+    /* fullname = Provider.of<AuthProvider>(context, listen: false)
         .authRegisterResponse!
         .data!
-        .fullname!;
+        .fullname!; */
 
-    getUserFromSP();
+    //getUserFromSP();
+    fullname = Provider.of<AuthProvider>(context, listen: false).fullname;
+    print('----- user full name = ${fullname}');
 
     // Assuming the audio file is located at 'path/to/audio/file.mp3'
     File audioFile2 = File('audio/audio.mp3');
@@ -488,7 +491,7 @@ class _AccueilState extends State<Accueil> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TitleOption(
-                              data: 'Bonjour $userName',
+                              data: 'Bonjour ${Provider.of<AuthProvider>(context, listen: false).fullname}',
                               color: Colors.white,
                               size: 18,
                               weight: FontWeight.w600),

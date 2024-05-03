@@ -7,7 +7,7 @@ import 'package:terappmobile/configs/config.dart';
 import 'package:terappmobile/models/request/auth_code_request.dart';
 import 'package:terappmobile/models/request/auth_register_request.dart';
 import 'package:terappmobile/models/request/authotp_request.dart';
-import 'package:terappmobile/models/response/auth_code_response.dart';
+import 'package:terappmobile/models/response/auth_mobile_response.dart';
 import 'package:terappmobile/models/response/auth_register_response.dart';
 import 'package:terappmobile/models/response/authotp_response.dart';
 

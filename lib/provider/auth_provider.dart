@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:terappmobile/models/request/auth_code_request.dart';
 import 'package:terappmobile/models/request/auth_register_request.dart';
 import 'package:terappmobile/models/request/authotp_request.dart';
-import 'package:terappmobile/models/response/auth_code_response.dart';
+import 'package:terappmobile/models/response/auth_mobile_response.dart';
 import 'package:terappmobile/models/response/auth_register_response.dart';
 import 'package:terappmobile/screens/auth/cgu.dart';
 import 'package:terappmobile/screens/auth/otp.dart';
@@ -26,6 +26,13 @@ class AuthProvider extends ChangeNotifier {
   bool _isSignedIn = false;
   bool get isSignedIn => _isSignedIn;
 
+  String? _fullname;
+  String get fullname => _fullname!;
+
+  String? _otp;
+  String get otp => _fullname!;
+
+
   late bool _cgu;
   bool get cgu => _cgu;
   setCgu(bool value) {
@@ -43,15 +50,52 @@ class AuthProvider extends ChangeNotifier {
   }
 
   /* save user to shared preferences */
-  Future saveUserToSP(AuthRegisterResponse data) async {
+  /* Future saveUserToSP(AuthRegisterResponse data) async {
     SharedPreferences s = await SharedPreferences.getInstance();
     s.setBool("is_signedin", true);
     s.setString("user_model", jsonEncode(data));
     notifyListeners();
   }
+ */
+  Future saveUserToSP(dynamic userData) async {
+    SharedPreferences s = await SharedPreferences.getInstance();
+    s.setBool("is_signedin", true);
+    s.setString("user_model", jsonEncode(userData));
+    notifyListeners();
+  }
 
   /* get user to shared preferences */
-  Future<AuthRegisterResponse?> getUserFromSP() async {
+  Future<dynamic> getUserFromSP() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String data = prefs.getString("user_model") ?? "";
+      if (data.isNotEmpty) {
+        Map<String, dynamic> jsonData = jsonDecode(data);
+        if (jsonData.containsKey('status')) {
+          // Assuming 'status' field exists in AuthRegisterResponse
+          AuthRegisterResponse userResponse =
+              AuthRegisterResponse.fromJson(jsonData);
+          print(
+              'Retrieved AuthRegisterResponse from shared preferences: $userResponse');
+          return userResponse;
+        } else {
+          AuthMobileResponse mobileResponse =
+              AuthMobileResponse.fromJson(jsonData);
+          print(
+              'Retrieved AuthMobileResponse from shared preferences: $mobileResponse');
+          return mobileResponse;
+        }
+      } else {
+        print('No user data found in shared preferences');
+        return null;
+      }
+    } catch (e) {
+      print('Error retrieving user data from shared preferences: $e');
+      return null;
+    }
+  }
+
+  /* Future<AuthRegisterResponse?> getUserFromSP() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String data = prefs.getString("user_model") ?? "";
@@ -70,7 +114,7 @@ class AuthProvider extends ChangeNotifier {
       return null;
     }
   }
-
+ */
   /* Future<AuthRegisterResponse?> getUserFromSP() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String data = prefs.getString("user_model") ?? "";
@@ -90,6 +134,9 @@ class AuthProvider extends ChangeNotifier {
     try {
       _authMobileRequest = authMobileRequest;
       _authMobileResponse = response;
+
+      // Data data = response?.data;
+
       if (response?.status == 1) {
         print('user n exist pas');
         Navigator.push(
@@ -98,7 +145,18 @@ class AuthProvider extends ChangeNotifier {
         );
         notifyListeners();
       } else if (response?.status == 0) {
+        //saveUserToSP(response);
+        if (response != null &&
+            response.data != null &&
+            response.data is DataMobile ) {
+          _fullname = response.data.fullname;
+        }
         print('----- user exist -----');
+        /* // Save user data to SharedPreferences
+        if (response?.data != null) {
+          saveUserToSP(response!.data);
+        } */
+
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Accueil()),
@@ -148,9 +206,11 @@ class AuthProvider extends ChangeNotifier {
 
       if (response != null && response.status != null && response.status == 0) {
         _authRegisterResponse = response;
-        saveUserToSP(response);
+        _fullname = response.data!.fullname!;
+
+        //saveUserToSP(response);
         //var username = await getUserFromSP().then((value) => null);
-        
+
         print(response.status);
         Navigator.push(
           context,
