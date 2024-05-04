@@ -323,10 +323,13 @@ class _GareDetailState extends State<GareDetail> {
                                   ),
                                   Row(
                                     children: [
-                                      Icon(
-                                        Icons.check,
-                                        color: Colors.green,
-                                        weight: 12,
+                                      CircleAvatar(
+                                        backgroundColor: ,
+                                        child: Icon(
+                                          Icons.check,
+                                          color: Colors.green,
+                                          weight: 12,
+                                        ),
                                       ),
                                       TitleOption(
                                         data: 'Disponible',
@@ -419,7 +422,7 @@ class _CommerceListItemState extends State<CommerceListItem> {
             ),
         
         
-        SizedBox(height: 3,),
+        SizedBox(height: 5,),
 
       ],
     );

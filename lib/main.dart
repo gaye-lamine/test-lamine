@@ -29,17 +29,20 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
-        ChangeNotifierProvider<SeterProvider>(create: (_) => SeterProvider()),
-        ChangeNotifierProvider<GareProvider>(create: (_) => GareProvider()),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        // ...
-        home: Accueil(),
-      ),
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
+          ChangeNotifierProvider<SeterProvider>(create: (_) => SeterProvider()),
+          ChangeNotifierProvider<GareProvider>(create: (_) => GareProvider()),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: AppColors.beige)
+          ),
 
+          // ...
+          home: SignUp(),
+        ));
   }
 }
