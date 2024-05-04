@@ -45,9 +45,7 @@ class _OtpState extends State<Otp> {
     var app = Provider.of<AuthProvider>(context, listen: false);
     var phone = app.authMobileRequest!.phone;
     //var otp = app.authcoderesponse!.data.toString();
-    var otp =
-        app.authcoderesponse!.data!.otp;
-
+    var otp = app.authcoderesponse!.data!.otp;
     print('------  numer = $phone , otp = $otp  ----------');
     print(isactive);
   }

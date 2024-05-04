@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:terappmobile/provider/auth_provider.dart';
+import 'package:terappmobile/provider/seter_provider.dart';
+import 'package:terappmobile/provider/train_provider.dart';
 import 'package:terappmobile/screens/auth/cgu.dart';
 import 'package:terappmobile/screens/auth/deliverytrack.dart';
 import 'package:terappmobile/screens/home/abonnement.dart';
@@ -29,11 +31,13 @@ class MyApp extends StatelessWidget {
      return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
+        ChangeNotifierProvider<SeterProvider>(create: (_) => SeterProvider()),
+        ChangeNotifierProvider<GareProvider>(create: (_) => GareProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         // ...
-        home: SignUp(),
+        home: Accueil(),
       ),
     );
   }

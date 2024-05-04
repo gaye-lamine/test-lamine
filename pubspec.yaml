@@ -107,7 +107,6 @@ flutter:
     - images/icontrajet.png
     - audios/audio.mp3
     - images/trajet.png
-    - images/train.png
     - images/star.png
     - images/classe.png
     - images/plus.png
@@ -130,6 +129,13 @@ flutter:
     - images/profil2.png
     - images/abonne.png
     - images/modifypic.png
+    - images/info.png
+    - images/timegreen.png
+    - images/timered.png
+    - images/check.png
+    - images/detailgare.png
+
+
     - audios/audio.mp3
    # - .png
 

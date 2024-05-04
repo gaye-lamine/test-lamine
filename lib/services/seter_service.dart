@@ -12,27 +12,34 @@ class SeterService {
 
   /* -------------  get all trains service         ------------------- */
 
-static Future<TrainStationsResponse> getALLtrainService() async {
-  try {
-    final response = await http.get(
-      Uri.parse(Config.apiUrlSeter + Config.allTrainsStation),
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        'Accept': '*/*',
-      },
-    );
+static Future<List<TrainStationsResponse>> getAllTrainStationService() async {
+    try {
+      String token = 'p19bkCMOjd4vWyDKI64joB0AyGbosKRZLHrklpdVctfu9WvIvLAVfwi0VRVv6yvf' ;
+      final response = await http.get(
+        Uri.parse(Config.apiUrlSeter + Config.allTrainsStation),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          'Accept': '*/*',
+        'token': '$token',
 
-    if (response.statusCode == 200) {
-      // Successful GET request
-      final responseData = jsonDecode(response.body);
-      return TrainStationsResponse.fromJson(responseData);
-    } else {
-      throw Exception('Failed to load train stations: ${response.statusCode}');
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Successful GET request
+        final responseData = jsonDecode(response.body);
+        final List<dynamic> stationsData = responseData as List<dynamic>;
+        final List<TrainStationsResponse> stations = stationsData
+            .map((station) => TrainStationsResponse.fromJson(station))
+            .toList();
+        return stations;
+      } else {
+        throw Exception(
+            'Failed to load train stations: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to load train stations: $e');
     }
-  } catch (e) {
-    throw Exception('Failed to load train stations: $e');
   }
-}
-
  }

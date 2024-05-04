@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:terappmobile/models/card_info.dart';
+import 'package:terappmobile/models/response/trains_station_response.dart';
 import 'package:terappmobile/models/voyage_info.dart';
 import 'package:terappmobile/provider/auth_provider.dart';
+import 'package:terappmobile/provider/seter_provider.dart';
 import 'package:terappmobile/screens/ajout_voyage/ajout_voyage.dart';
 import 'package:terappmobile/screens/train/suivi_voyage.dart';
 import 'package:terappmobile/screens/train/train_voyage.dart';
@@ -24,15 +26,23 @@ class Accueil extends StatefulWidget {
 
 class _AccueilState extends State<Accueil> {
   String userName = "";
+ late Future<List<TrainStationsResponse>> gareFuture;
 
-  String fullname = '';
+  Future<List<TrainStationsResponse>> gares() async {
+    final ap = Provider.of<SeterProvider>(context, listen: false);
+    List<TrainStationsResponse> result = await ap.getALLtrainProvider(context);
+    return result;
+  }
+
+
+ // String fullname = '';
   /* List<CardInfo> cardinfo = [
     CardInfo(imageAsset: 'images/logoter.png', title: 'À savoir !', description: 'Aliquam eget purus sit malesuada tempor euismod. Aliquam eget purus sit malesuada tempor euismod.', audioFile: audioFile)
   ]; */
 
   List<CardInfo> cardInfoList = [];
   List<VoyageInfo> voyageInfoList = [];
-  List<String> gares = [
+  /* List<String> gares = [
     'Gare de Dakar',
     'Gare de Thiaroye',
     'Gare de Pikine',
@@ -40,7 +50,7 @@ class _AccueilState extends State<Accueil> {
     'Gare de Dalifort',
     'Gare de Hann',
     'Gare de Colobane'
-  ];
+  ]; */
 
   void gareModal() {
     showModalBottomSheet(
@@ -90,80 +100,46 @@ class _AccueilState extends State<Accueil> {
                   ),
                 ),
                 Expanded(
-                  // Add a Container to provide a height constraint
-                  //height: 500, // Set the desired height for the container
-                  //padding: EdgeInsets.symmetric(vertical: 20),
-                  child: ListView.builder(
-                    itemCount: gares.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () async {
-                          /* Your onTap logic here */
-                          print('gare');
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => TrainVoyage()));
-                        },
-                        child: ListeGareWidget(
-                          gareName: gares[index],
-                        ),
-                      );
+                  child: FutureBuilder<List<TrainStationsResponse>>(
+                    future: gares(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text('Error: ${snapshot.error}'),
+                        );
+                      } else {
+                        List<TrainStationsResponse>? garesList = snapshot.data;
+                        return ListView.builder(
+                          itemCount: garesList!.length,
+                          itemBuilder: (context, index) {
+                            final gare = garesList[index];
+                            return InkWell(
+                              onTap: () async {
+                                /* Your onTap logic here */
+                                print('gare');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => TrainVoyage()),
+                                );
+                              },
+                              child: ListeGareWidget(trainStationsResponse: gare,)
+                            );
+                          },
+                        );
+                      }
                     },
                   ),
                 ),
+
               ]),
             )
 
-        /* Stack(
-        //clipBehavior: Clip.none,
-        alignment: Alignment.center,
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height -
-                MediaQuery.of(context).size.height / 4,
-            width: double.infinity,
-            //color: Colors.white,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-              color: Colors.white,
-            ),
-            child: Column(children: [
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      color: Colors.grey,
-                      width: 100,
-                      height: 3,
-                    ),
-                  ),
-                  Container(height: 500, color: Colors.red,)
-                  /* ListView.builder(
-                  itemCount: gares.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () async {
-                        /* Your onTap logic here */
-                      },
-                      child: ListeGare(),
-                    );
-                  },
-                ) */
-                  
-                ],
-              )
-            ]),
-          )
-        ],
-      ),
-    */
+      
         );
   }
 
@@ -349,8 +325,9 @@ class _AccueilState extends State<Accueil> {
         .fullname!; */
 
     //getUserFromSP();
-    fullname = Provider.of<AuthProvider>(context, listen: false).fullname;
-    print('----- user full name = ${fullname}');
+    gareFuture = gares();
+   // fullname = Provider.of<AuthProvider>(context, listen: false).fullname;
+    //print('----- user full name = ${fullname}');
 
     // Assuming the audio file is located at 'path/to/audio/file.mp3'
     File audioFile2 = File('audio/audio.mp3');
@@ -491,7 +468,8 @@ class _AccueilState extends State<Accueil> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TitleOption(
-                              data: 'Bonjour ${Provider.of<AuthProvider>(context, listen: false).fullname}',
+                              data:
+                                  'Bonjour }',
                               color: Colors.white,
                               size: 18,
                               weight: FontWeight.w600),
