@@ -1,19 +1,15 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:terappmobile/models/card_info.dart';
 import 'package:terappmobile/models/response/trains_station_response.dart';
 import 'package:terappmobile/models/voyage_info.dart';
-import 'package:terappmobile/provider/auth_provider.dart';
 import 'package:terappmobile/provider/seter_provider.dart';
 import 'package:terappmobile/screens/ajout_voyage/ajout_voyage.dart';
 import 'package:terappmobile/screens/train/suivi_voyage.dart';
 import 'package:terappmobile/screens/train/train_voyage.dart';
 import 'package:terappmobile/utils/app_colors.dart';
-import 'package:terappmobile/utils/googlefonts.dart';
 import 'package:terappmobile/utils/title_option.dart';
 import 'package:terappmobile/widgets/customelevatedbutton.dart';
 import 'package:terappmobile/widgets/listegare_widgets.dart';
@@ -26,7 +22,7 @@ class Accueil extends StatefulWidget {
 
 class _AccueilState extends State<Accueil> {
   String userName = "";
- late Future<List<TrainStationsResponse>> gareFuture;
+  late Future<List<TrainStationsResponse>> gareFuture;
 
   Future<List<TrainStationsResponse>> gares() async {
     final ap = Provider.of<SeterProvider>(context, listen: false);
@@ -34,8 +30,7 @@ class _AccueilState extends State<Accueil> {
     return result;
   }
 
-
- // String fullname = '';
+  // String fullname = '';
   /* List<CardInfo> cardinfo = [
     CardInfo(imageAsset: 'images/logoter.png', title: 'À savoir !', description: 'Aliquam eget purus sit malesuada tempor euismod. Aliquam eget purus sit malesuada tempor euismod.', audioFile: audioFile)
   ]; */
@@ -118,29 +113,26 @@ class _AccueilState extends State<Accueil> {
                           itemBuilder: (context, index) {
                             final gare = garesList[index];
                             return InkWell(
-                              onTap: () async {
-                                /* Your onTap logic here */
-                                print('gare');
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => TrainVoyage()),
-                                );
-                              },
-                              child: ListeGareWidget(trainStationsResponse: gare,)
-                            );
+                                onTap: () async {
+                                  /* Your onTap logic here */
+                                  print('gare');
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => TrainVoyage()),
+                                  );
+                                },
+                                child: ListeGareWidget(
+                                  trainStationsResponse: gare,
+                                ));
                           },
                         );
                       }
                     },
                   ),
                 ),
-
               ]),
-            )
-
-      
-        );
+            ));
   }
 
   void ajoutVoyageModal() {
@@ -326,7 +318,7 @@ class _AccueilState extends State<Accueil> {
 
     //getUserFromSP();
     gareFuture = gares();
-   // fullname = Provider.of<AuthProvider>(context, listen: false).fullname;
+    // fullname = Provider.of<AuthProvider>(context, listen: false).fullname;
     //print('----- user full name = ${fullname}');
 
     // Assuming the audio file is located at 'path/to/audio/file.mp3'
@@ -468,8 +460,7 @@ class _AccueilState extends State<Accueil> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TitleOption(
-                              data:
-                                  'Bonjour }',
+                              data: 'Bonjour }',
                               color: Colors.white,
                               size: 18,
                               weight: FontWeight.w600),

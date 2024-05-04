@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:terappmobile/models/page_model.dart';
+import 'package:provider/provider.dart';
 import 'package:terappmobile/models/request/auth_code_request.dart';
 import 'package:terappmobile/provider/auth_provider.dart';
-import 'package:terappmobile/screens/auth/welcome.dart';
 import 'package:terappmobile/utils/app_colors.dart';
 import 'package:terappmobile/utils/title_option.dart';
 import 'package:terappmobile/utils/title_text.dart';
-import 'package:provider/provider.dart';
-import 'otp.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -120,163 +116,171 @@ class _SignUpState extends State<SignUp> {
               height: 300,
               width: width,
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    minRadius: 50,
-                    backgroundColor: AppColors.beige,
-                    child: Image.asset(
-                      'images/phone.png',
-                      height: 50,
-                      width: 50,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      minRadius: 50,
+                      backgroundColor: AppColors.beige,
+                      child: Image.asset(
+                        'images/phone.png',
+                        height: 50,
+                        width: 50,
+                      ),
                     ),
-                  ),
-                  // Center(),
+                    // Center(),
 
-                  Center(
-                    child: Column(
-                      children: [
-                        TitleOption(
-                          data: 'Inscription',
-                          color: AppColors.marron,
-                          size: 32,
-                          weight: FontWeight.bold,
-                          maxLines: 1,
-                          overflow: TextOverflow.clip,
-                        ),
-                        TitleOption(
-                          data: 'Renseigner votre numéro de téléphone',
-                          color: Colors.black54,
-                          size: 18,
-                          weight: FontWeight.normal,
-                          maxLines: 1,
-                          overflow: TextOverflow.clip,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TitleOption(
-                          data: 'Téléphone',
-                          color: Colors.black45,
-                          size: 16,
-                          weight: FontWeight.w100,
-                          textAlign: TextAlign.start,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    Center(
+                      child: SingleChildScrollView(
+                        child: Column(
                           children: [
-                            Container(
-                              width: 100,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(245, 245, 245, 1),
-                                  borderRadius: BorderRadius.circular(6)),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Image.asset(
-                                    'images/flag.png',
-                                    width: 30,
-                                    height: 20,
-                                  ),
-                                  TitleOption(
-                                      data: '+221',
-                                      color: Colors.black26,
-                                      size: 16,
-                                      weight: FontWeight.bold)
-                                ],
-                              ),
+                            TitleOption(
+                              data: 'Inscription',
+                              color: AppColors.marron,
+                              size: 32,
+                              weight: FontWeight.bold,
+                              maxLines: 1,
+                              overflow: TextOverflow.clip,
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: Container(
-                                //width: 250,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                    //color: Color.fromRGBO(245, 245, 245, 1),
-                                    /*  border: Border.all(
-                                      color: AppColors.marron,
-                                      width: 1,
-                                    ), */
-                                    borderRadius: BorderRadius.circular(6)),
-                                child: TextField(
-                                  controller: phoneNumberController,
-                                  onChanged: (value) {
-                                    updateActiveState();
-                                  },
-                                  decoration: InputDecoration(
-                                    hintText: '',
-                                    labelStyle:
-                                        TextStyle(color: Colors.black38),
-                                    fillColor: Colors.white,
-                                    focusColor: Colors.grey,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: BorderSide(
-                                          width: 3.0, color: AppColors.marron),
-                                    ),
-                                  ),
-                                  keyboardType: TextInputType.number,
-                                ),
-                              ),
+                            TitleOption(
+                              data: 'Renseigner votre numéro de téléphone',
+                              color: Colors.black54,
+                              size: 18,
+                              weight: FontWeight.normal,
+                              maxLines: 1,
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.center,
                             ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
 
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        tapTargetSize: MaterialTapTargetSize
-                            .shrinkWrap, // Remove click animation
-                        backgroundColor: AppColors.marron,
-                        minimumSize: Size(double.infinity, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6.0),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TitleOption(
+                              data: 'Téléphone',
+                              color: Colors.black45,
+                              size: 16,
+                              weight: FontWeight.w100,
+                              textAlign: TextAlign.start,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 100,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      color: Color.fromRGBO(245, 245, 245, 1),
+                                      borderRadius: BorderRadius.circular(6)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Image.asset(
+                                        'images/flag.png',
+                                        width: 30,
+                                        height: 20,
+                                      ),
+                                      TitleOption(
+                                          data: '+221',
+                                          color: Colors.black26,
+                                          size: 16,
+                                          weight: FontWeight.bold)
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    //width: 250,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                        //color: Color.fromRGBO(245, 245, 245, 1),
+                                        /*  border: Border.all(
+                                          color: AppColors.marron,
+                                          width: 1,
+                                        ), */
+                                        borderRadius: BorderRadius.circular(6)),
+                                    child: TextField(
+                                      controller: phoneNumberController,
+                                      onChanged: (value) {
+                                        updateActiveState();
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: '',
+                                        labelStyle:
+                                            TextStyle(color: Colors.black38),
+                                        fillColor: Colors.white,
+                                        focusColor: Colors.grey,
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          borderSide: BorderSide(
+                                              width: 3.0,
+                                              color: AppColors.marron),
+                                        ),
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      onPressed: isactive
-                          ? () {
-                              authPhone();
-                              /*  Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Otp())); */
-                            }
-                          : null,
-                      child: TitleText(
-                        data: 'Se connecter',
-                        color: Colors.white,
-                        size: 13,
-                        weight: FontWeight.normal,
-                        maxLines: 1,
-                        overflow: TextOverflow.clip,
-                        fontFamily: 'Poppins',
+                    ),
+
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          tapTargetSize: MaterialTapTargetSize
+                              .shrinkWrap, // Remove click animation
+                          backgroundColor: AppColors.marron,
+                          minimumSize: Size(double.infinity, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6.0),
+                          ),
+                        ),
+                        onPressed: isactive
+                            ? () {
+                                authPhone();
+                                /*  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => Otp())); */
+                              }
+                            : null,
+                        child: TitleText(
+                          data: 'Se connecter',
+                          color: Colors.white,
+                          size: 13,
+                          weight: FontWeight.normal,
+                          maxLines: 1,
+                          overflow: TextOverflow.clip,
+                          fontFamily: 'Poppins',
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

@@ -1,21 +1,10 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:terappmobile/models/card_info.dart';
-import 'package:terappmobile/models/voyage_info.dart';
-import 'package:terappmobile/screens/ajout_voyage/ajout_voyage.dart';
-import 'package:terappmobile/screens/home/accueil.dart';
-import 'package:terappmobile/screens/train/suivi_voyage.dart';
-import 'package:terappmobile/screens/train/train_voyage.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:terappmobile/provider/get_user_provider.dart';
 import 'package:terappmobile/utils/app_colors.dart';
-import 'package:terappmobile/utils/googlefonts.dart';
 import 'package:terappmobile/utils/title_option.dart';
 import 'package:terappmobile/widgets/customelevatedbutton.dart';
-import 'package:terappmobile/widgets/listegare_widgets.dart';
-import 'package:voice_message_package/voice_message_package.dart';
 
 class ModifyProfile extends StatefulWidget {
   @override
@@ -26,9 +15,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
   late TextEditingController addressController;
   late TextEditingController carteController;
   late TextEditingController nomController;
-    late TextEditingController phoneNumberController = TextEditingController();
-
-
+  late TextEditingController phoneNumberController = TextEditingController();
 
   bool isactive = false;
   bool switchValue = false;
@@ -71,13 +58,20 @@ class _ModifyProfileState extends State<ModifyProfile> {
     });
   }
 
+  void getuser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("user_id") as int;
+    print("l'id du user connecté $id");
+  }
+
   @override
   Widget build(BuildContext context) {
+    var getUserProvider = Provider.of<GetUserProvider>(context, listen: false);
+    getUserProvider.fetchUser();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
       body: Stack(
         children: [
           Container(
@@ -152,8 +146,6 @@ class _ModifyProfileState extends State<ModifyProfile> {
               ),
             ),
           ),
-          
-          
           Positioned.fill(
             top: 100,
             child: Container(
@@ -169,29 +161,27 @@ class _ModifyProfileState extends State<ModifyProfile> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                      Stack(children: [
-                        Image.asset(
-                          'images/profil2.png',
-                          width: 100,
-                        ),
-                        Positioned(
-                          bottom: 5,
-                          right: 0,
-                          //right:10 ,
-                          // alignment: Alignment.bottomLeft,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            child: Image.asset('images/modifypic.png'),
+                        Stack(children: [
+                          Image.asset(
+                            'images/profil2.png',
+                            width: 100,
                           ),
-                        )
-                      ]),
-
-                      TitleOption(
+                          Positioned(
+                            bottom: 5,
+                            right: 0,
+                            //right:10 ,
+                            // alignment: Alignment.bottomLeft,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child: Image.asset('images/modifypic.png'),
+                            ),
+                          )
+                        ]),
+                        TitleOption(
                           data: 'Mouhamadou Coulibaly ',
                           color: Colors.black87,
                           size: 18,
@@ -205,12 +195,9 @@ class _ModifyProfileState extends State<ModifyProfile> {
                           weight: FontWeight.w700,
                           maxLines: 2,
                         ),
-
-
- 
-
-                    ],),
-                  ) ,
+                      ],
+                    ),
+                  ),
 
                   SizedBox(
                     height: 10,
@@ -294,8 +281,10 @@ class _ModifyProfileState extends State<ModifyProfile> {
                       keyboardType: TextInputType.emailAddress,
                     ),
                   ),
-                  SizedBox(height: 20,),
-                   Column(
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TitleOption(
@@ -367,12 +356,19 @@ class _ModifyProfileState extends State<ModifyProfile> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20,) ,
-                  CustomElevatedButton(text: 'Enregistrer les modifications', textColor: Colors.white, backgroundColor: AppColors.marron, borderColor: AppColors.marron, borderRadius: 10, width: double.infinity, height: 55, onPressed: (){})
-                  
-                  
+                  SizedBox(
+                    height: 20,
+                  ),
+                  CustomElevatedButton(
+                      text: 'Enregistrer les modifications',
+                      textColor: Colors.white,
+                      backgroundColor: AppColors.marron,
+                      borderColor: AppColors.marron,
+                      borderRadius: 10,
+                      width: double.infinity,
+                      height: 55,
+                      onPressed: () {})
 
-                 
                   //
                 ],
               ),
