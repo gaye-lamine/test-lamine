@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:terappmobile/screens/auth/onboarding.dart';
 import 'package:terappmobile/screens/auth/sign_up.dart';
@@ -27,6 +29,8 @@ class _SplashScreenState extends State<Welcome> {
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: true, // or false based on your requirements
+
       body: SafeArea(
         child: Stack(
           children: [
@@ -83,57 +87,62 @@ class _SplashScreenState extends State<Welcome> {
                         height: 50,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              elevation: 0,
-                              tapTargetSize: MaterialTapTargetSize
-                                  .shrinkWrap, // Remove click animation
-                             // onPrimary: Color.fromRGBO(245, 245, 245, 1),
-                              backgroundColor: Color.fromRGBO(245, 245, 245, 1),
-                              minimumSize: Size(width / 2 - 20, 50),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6.0),
+                          Flexible(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                tapTargetSize: MaterialTapTargetSize
+                                    .shrinkWrap, // Remove click animation
+                               // onPrimary: Color.fromRGBO(245, 245, 245, 1),
+                                backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+                                minimumSize: Size(width / 2 - 30, 50),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                ),
                               ),
-                            ),
-                            onPressed: () {
-                              // Add your onPressed logic here
-                            },
-                            child: TitleText(
-                              data: 'Se connecter',
-                              color: AppColors.marron,
-                              size: 13,
-                              weight: FontWeight.normal,
-                              maxLines: 1,
-                              overflow: TextOverflow.clip,
-                              fontFamily: 'Poppins',
+                              onPressed: () {
+                                // Add your onPressed logic here
+                              },
+                              child: TitleText(
+                                data: 'Se connecter',
+                                color: AppColors.marron,
+                                size: 13,
+                                weight: FontWeight.normal,
+                                maxLines: 1,
+                                overflow: TextOverflow.clip,
+                                fontFamily: 'Poppins',
+                              ),
                             ),
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              elevation: 0,
-                              tapTargetSize: MaterialTapTargetSize
-                                  .shrinkWrap, // Remove click animation
-                              backgroundColor: AppColors.marron,
-                              minimumSize: Size(width / 2 - 20, 50),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6.0),
+                          SizedBox(width :10),
+                          Flexible(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                tapTargetSize: MaterialTapTargetSize
+                                    .shrinkWrap, // Remove click animation
+                                backgroundColor: AppColors.marron,
+                                minimumSize: Size(width / 2 - 30, 50),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                ),
                               ),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: ((context) => SignUp())));
-                            },
-                            child: TitleText(
-                              data: 'S\' inscrire',
-                              color: Colors.white,
-                              size: 13,
-                              weight: FontWeight.normal,
-                              maxLines: 1,
-                              overflow: TextOverflow.clip,
-                              fontFamily: 'Poppins',
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: ((context) => SignUp())));
+                              },
+                              child: TitleText(
+                                data: 'S\' inscrire',
+                                color: Colors.white,
+                                size: 13,
+                                weight: FontWeight.normal,
+                                maxLines: 1,
+                                overflow: TextOverflow.clip,
+                                fontFamily: 'Poppins',
+                              ),
                             ),
                           ),
                         ],

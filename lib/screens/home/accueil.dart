@@ -2,8 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:terappmobile/models/card_info.dart';
+import 'package:terappmobile/models/response/trains_station_response.dart';
 import 'package:terappmobile/models/voyage_info.dart';
+import 'package:terappmobile/provider/auth_provider.dart';
+import 'package:terappmobile/provider/seter_provider.dart';
 import 'package:terappmobile/screens/ajout_voyage/ajout_voyage.dart';
 import 'package:terappmobile/screens/train/suivi_voyage.dart';
 import 'package:terappmobile/screens/train/train_voyage.dart';
@@ -20,21 +25,24 @@ class Accueil extends StatefulWidget {
 }
 
 class _AccueilState extends State<Accueil> {
-  bool isChecked = false;
-  late TextEditingController nomController;
-  late TextEditingController addressController;
-  late TextEditingController carteController;
+  String userName = "";
+ late Future<List<TrainStationsResponse>> gareFuture;
 
-  bool isactive = false;
-  bool switchValue = false;
+  Future<List<TrainStationsResponse>> gares() async {
+    final ap = Provider.of<SeterProvider>(context, listen: false);
+    List<TrainStationsResponse> result = await ap.getALLtrainProvider(context);
+    return result;
+  }
 
+
+ // String fullname = '';
   /* List<CardInfo> cardinfo = [
     CardInfo(imageAsset: 'images/logoter.png', title: 'À savoir !', description: 'Aliquam eget purus sit malesuada tempor euismod. Aliquam eget purus sit malesuada tempor euismod.', audioFile: audioFile)
   ]; */
 
   List<CardInfo> cardInfoList = [];
   List<VoyageInfo> voyageInfoList = [];
-  List<String> gares = [
+  /* List<String> gares = [
     'Gare de Dakar',
     'Gare de Thiaroye',
     'Gare de Pikine',
@@ -42,44 +50,7 @@ class _AccueilState extends State<Accueil> {
     'Gare de Dalifort',
     'Gare de Hann',
     'Gare de Colobane'
-  ];
-
-  void main() {
-    // Assuming the audio file is located at 'path/to/audio/file.mp3'
-    File audioFile2 = File('path/to/audio/file.mp3');
-    File audioFile1 = File('path/to/audio/file.mp3');
-    File audioFile3 = File('path/to/audio/file.mp3');
-
-    List<CardInfo> cardInfoList = [
-      CardInfo(
-        imageAsset: 'images/logoter.png',
-        title: 'À savoir !',
-        description:
-            'Aliquam eget purus sit malesuada tempor euismod. Aliquam eget purus sit malesuada tempor euismod.',
-        audioFile: audioFile1,
-      ),
-      CardInfo(
-        imageAsset: 'images/logoter.png',
-        title: 'À savoir !',
-        description:
-            'Aliquam eget purus sit malesuada tempor euismod. Aliquam eget purus sit malesuada tempor euismod.',
-        audioFile: audioFile2,
-      ),
-      CardInfo(
-        imageAsset: 'images/logoter.png',
-        title: 'À savoir !',
-        description:
-            'Aliquam eget purus sit malesuada tempor euismod. Aliquam eget purus sit malesuada tempor euismod.',
-        audioFile: audioFile3,
-      ),
-    ];
-
-    // Accessing the audio file for the first CardInfo object in the list
-    File firstCardAudioFile = cardInfoList[0].audioFile;
-
-    // Use the audio file as needed
-    // ...
-  }
+  ]; */
 
   void gareModal() {
     showModalBottomSheet(
@@ -129,80 +100,46 @@ class _AccueilState extends State<Accueil> {
                   ),
                 ),
                 Expanded(
-                  // Add a Container to provide a height constraint
-                  //height: 500, // Set the desired height for the container
-                  //padding: EdgeInsets.symmetric(vertical: 20),
-                  child: ListView.builder(
-                    itemCount: gares.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () async {
-                          /* Your onTap logic here */
-                          print('gare');
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => TrainVoyage()));
-                        },
-                        child: ListeGareWidget(
-                          gareName: gares[index],
-                        ),
-                      );
+                  child: FutureBuilder<List<TrainStationsResponse>>(
+                    future: gares(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text('Error: ${snapshot.error}'),
+                        );
+                      } else {
+                        List<TrainStationsResponse>? garesList = snapshot.data;
+                        return ListView.builder(
+                          itemCount: garesList!.length,
+                          itemBuilder: (context, index) {
+                            final gare = garesList[index];
+                            return InkWell(
+                              onTap: () async {
+                                /* Your onTap logic here */
+                                print('gare');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => TrainVoyage()),
+                                );
+                              },
+                              child: ListeGareWidget(trainStationsResponse: gare,)
+                            );
+                          },
+                        );
+                      }
                     },
                   ),
                 ),
+
               ]),
             )
 
-        /* Stack(
-        //clipBehavior: Clip.none,
-        alignment: Alignment.center,
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height -
-                MediaQuery.of(context).size.height / 4,
-            width: double.infinity,
-            //color: Colors.white,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-              color: Colors.white,
-            ),
-            child: Column(children: [
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      color: Colors.grey,
-                      width: 100,
-                      height: 3,
-                    ),
-                  ),
-                  Container(height: 500, color: Colors.red,)
-                  /* ListView.builder(
-                  itemCount: gares.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () async {
-                        /* Your onTap logic here */
-                      },
-                      child: ListeGare(),
-                    );
-                  },
-                ) */
-                  
-                ],
-              )
-            ]),
-          )
-        ],
-      ),
-    */
+      
         );
   }
 
@@ -263,7 +200,9 @@ class _AccueilState extends State<Accueil> {
                     maxLines: 3,
                     textAlign: TextAlign.center,
                     weight: FontWeight.w300),
-                SizedBox(height: 40,) ,
+                SizedBox(
+                  height: 40,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -289,10 +228,10 @@ class _AccueilState extends State<Accueil> {
                         width: MediaQuery.of(context).size.width / 2 - 20,
                         height: 50,
                         onPressed: () {
-                           Navigator.push(
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AjoutVoyage())); 
+                                  builder: (context) => AjoutVoyage()));
                         }),
                   ],
                 ),
@@ -353,21 +292,47 @@ class _AccueilState extends State<Accueil> {
         );
   }
 
+  /* Future<void> getUserFromSP() async {
+    try {
+      
+       final value = await Provider.of<AuthProvider>(context, listen: false)
+          .getUserFromSP();
+      if (value != null) {
+        print('Retrieved user data: $value');
+        setState(() {
+          if (value.data != null) {
+            userName = value.data!.fullname!;
+            print('---------- username = $userName -------------');
+          } else {
+            print('User data is null');
+          }
+        });
+      } else {
+        print('User data not found in shared preferences');
+      } 
+    } catch (e) {
+      print('Error retrieving user data: $e');
+    }
+  }
+
+  */
   @override
   void initState() {
     super.initState();
-    nomController = TextEditingController();
-    addressController = TextEditingController();
-    carteController = TextEditingController();
+    /* fullname = Provider.of<AuthProvider>(context, listen: false)
+        .authRegisterResponse!
+        .data!
+        .fullname!; */
 
-    nomController.addListener(updateActivateState);
-    addressController.addListener(updateActivateState);
-    carteController.addListener(updateActivateState);
+    //getUserFromSP();
+    gareFuture = gares();
+   // fullname = Provider.of<AuthProvider>(context, listen: false).fullname;
+    //print('----- user full name = ${fullname}');
 
     // Assuming the audio file is located at 'path/to/audio/file.mp3'
-    File audioFile2 = File('path/to/audio/file.mp3');
-    File audioFile1 = File('path/to/audio/file.mp3');
-    File audioFile3 = File('path/to/audio/file.mp3');
+    File audioFile2 = File('audio/audio.mp3');
+    File audioFile1 = File('audio/audio.mp3');
+    File audioFile3 = File('audio/audio.mp3');
 
     voyageInfoList = [
       VoyageInfo(
@@ -424,25 +389,8 @@ class _AccueilState extends State<Accueil> {
   @override
   void dispose() {
     // TODO: implement dispose
-    nomController.dispose();
-    addressController.dispose();
-    carteController.dispose();
+
     super.dispose();
-  }
-
-  void updateActivateState() {
-    bool isActive = false;
-
-    if (!switchValue) {
-      isActive =
-          nomController.text.isNotEmpty && addressController.text.isNotEmpty;
-    } else {
-      isActive = carteController.text.isNotEmpty;
-    }
-
-    setState(() {
-      isactive = isActive;
-    });
   }
 
   @override
@@ -520,7 +468,8 @@ class _AccueilState extends State<Accueil> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TitleOption(
-                              data: 'Bonjour Mouhamadou',
+                              data:
+                                  'Bonjour }',
                               color: Colors.white,
                               size: 18,
                               weight: FontWeight.w600),
@@ -628,12 +577,14 @@ class _AccueilState extends State<Accueil> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Container(
                                           width: 70,
                                           height: 46,
-                                          color: Color.fromRGBO(245, 245, 245, 1),
+                                          color:
+                                              Color.fromRGBO(245, 245, 245, 1),
                                           child: Center(
                                             child: Image.asset(
                                               'images/logoter.png',
@@ -662,57 +613,49 @@ class _AccueilState extends State<Accueil> {
                                                   size: 12,
                                                   textAlign: TextAlign.start,
                                                   weight: FontWeight.w300),
-                                             
+
                                               // Other card content
                                             ],
                                           ),
                                         )
                                       ],
-                                    
-                                      /*  Column(
-                                      children: [
-                                        Image.asset(cardInfo.imageAsset),
-                                        Text(cardInfo.title),
-                                        Text(cardInfo.description),
-                                        // Other card content
-                                      ],
-                                    ), */
                                     ),
-                                      Flexible(
-                                        //height: 80,
-                                        //width: 50,
-                                        child: VoiceMessageView(
-                                          backgroundColor: Colors.transparent,
-                                          circlesColor: AppColors.marron,
-                                          activeSliderColor: AppColors.marron,
-                                          notActiveSliderColor:
-                                              Colors.transparent,
-                                          size: 39,
-                                          controller: VoiceController(
-                                            audioSrc:
-                                                cardInfo.audioFile.toString(),
-                                            maxDuration:
-                                                const Duration(seconds: 10),
-                                            isFile: false,
-                                            onComplete: () {
-                                              /// do something on complete
-                                            },
-                                            onPause: () {
-                                              /// do something on pause
-                                            },
-                                            onPlaying: () {
-                                              /// do something on playing
-                                            },
-                                            onError: (err) {
-                                              /// do somethin on error
-                                            },
-                                          ),
-                                          innerPadding: 12,
-                                          cornerRadius: 20,
-                                        ),
-                                      ),
-                                    
 
+                                    // color: Colors.red,
+                                    /* child: Container(
+                                            //height: 80,
+                                           width: 280, */
+                                    Flexible(
+                                      child: VoiceMessageView(
+                                        backgroundColor: Colors.yellow,
+                                        circlesColor: AppColors.marron,
+                                        activeSliderColor: AppColors.marron,
+                                        notActiveSliderColor:
+                                            Colors.transparent,
+                                        size: 39,
+                                        controller: VoiceController(
+                                          audioSrc:
+                                              cardInfo.audioFile.toString(),
+                                          maxDuration:
+                                              const Duration(seconds: 10),
+                                          isFile: false,
+                                          onComplete: () {
+                                            /// do something on complete
+                                          },
+                                          onPause: () {
+                                            /// do something on pause
+                                          },
+                                          onPlaying: () {
+                                            /// do something on playing
+                                          },
+                                          onError: (err) {
+                                            /// do somethin on error
+                                          },
+                                        ),
+                                        innerPadding: 12,
+                                        cornerRadius: 5,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

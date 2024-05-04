@@ -41,6 +41,8 @@ class _ProfileState extends State<Profile> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+
       body: Stack(
         children: [
           Container(
@@ -68,7 +70,7 @@ class _ProfileState extends State<Profile> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Homescreencustomer()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Home()));
                     },
                     child: Container(
                       width: 45,

@@ -7,14 +7,14 @@ import 'package:terappmobile/screens/home/profile.dart';
 import 'package:terappmobile/screens/home/ticket.dart';
 import 'package:terappmobile/utils/app_colors.dart';
 
-class Homescreencustomer extends StatefulWidget {
-  const Homescreencustomer({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
-  State<Homescreencustomer> createState() => _HomescreencustomerState();
+  State<Home> createState() => _HomeState();
 }
 
-class _HomescreencustomerState extends State<Homescreencustomer> {
+class _HomeState extends State<Home> {
   int currentIndex = 0;
   List<NavBar> items = [];
 

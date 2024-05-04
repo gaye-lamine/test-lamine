@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:terappmobile/models/page_model.dart';
+import 'package:terappmobile/models/request/auth_code_request.dart';
+import 'package:terappmobile/provider/auth_provider.dart';
 import 'package:terappmobile/screens/auth/welcome.dart';
 import 'package:terappmobile/utils/app_colors.dart';
 import 'package:terappmobile/utils/title_option.dart';
 import 'package:terappmobile/utils/title_text.dart';
-
+import 'package:provider/provider.dart';
 import 'otp.dart';
 
 class SignUp extends StatefulWidget {
@@ -38,12 +40,21 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
   }
 
+  void authPhone() {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    AuthMobileRequest authMobileRequest =
+        AuthMobileRequest(phone: phoneNumberController.text.toString());
+    print('phone value ${phoneNumberController.text}');
+    var result = ap.checkPhoneNumberProvider(authMobileRequest, context);
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      
       body: Stack(
         children: [
           Container(
@@ -211,7 +222,8 @@ class _SignUpState extends State<SignUp> {
                                   },
                                   decoration: InputDecoration(
                                     hintText: '',
-                                    labelStyle: TextStyle(color: Colors.black38),
+                                    labelStyle:
+                                        TextStyle(color: Colors.black38),
                                     fillColor: Colors.white,
                                     focusColor: Colors.grey,
                                     border: OutlineInputBorder(
@@ -248,7 +260,9 @@ class _SignUpState extends State<SignUp> {
                       ),
                       onPressed: isactive
                           ? () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Otp()));
+                              authPhone();
+                              /*  Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Otp())); */
                             }
                           : null,
                       child: TitleText(

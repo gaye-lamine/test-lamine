@@ -1,23 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:terappmobile/models/response/trains_station_response.dart';
+import 'package:terappmobile/provider/train_provider.dart';
+import 'package:terappmobile/screens/train/gare_detail.dart';
 import 'package:terappmobile/utils/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:terappmobile/utils/app_colors.dart';
 
 class ListeGareWidget extends StatelessWidget {
-  ListeGareWidget({super.key,  required this.gareName});
+  final TrainStationsResponse trainStationsResponse;
+  ListeGareWidget({super.key, required  this.trainStationsResponse});
 
-  String gareName;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(10),
       child: Container(
-        width: double.infinity-20,
+        width: double.infinity - 20,
         height: 54,
-        
         child: Row(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           //crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,14 +29,32 @@ class ListeGareWidget extends StatelessWidget {
               backgroundColor: AppColors.rouge,
               child: Image.asset('images/train.png'),
             ),
-            SizedBox(width: 5,),
+            SizedBox(
+              width: 5,
+            ),
             Text(
-              gareName,
+              '${trainStationsResponse!.nom!}',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
             ),
+            Spacer(),
+            GestureDetector(
+              onTap : (){
+                // Update the selected station using Provider
+                Provider.of<GareProvider>(context, listen: false)
+                    .setSelectedStation(trainStationsResponse);
+                // Navigate to details screen
+                Navigator.push(context , MaterialPageRoute(builder: (context)=> GareDetail()));
+              } ,
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                minRadius: 15,
+                child: Image.asset('images/info.png',height: 20,),
+              ),
+            )
+
           ],
         ),
         decoration: BoxDecoration(

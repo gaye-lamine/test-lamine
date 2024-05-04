@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:terappmobile/provider/auth_provider.dart';
 import 'package:terappmobile/screens/auth/info_perso.dart';
 import 'package:terappmobile/utils/app_colors.dart';
 import 'package:terappmobile/utils/googlefonts.dart';
@@ -19,7 +21,9 @@ class _CguState extends State<Cgu> {
      var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
+
         children: [
           Container(
             height: double.infinity,
@@ -163,6 +167,9 @@ class _CguState extends State<Cgu> {
                                     onChanged: (bool? value) {
                                       setState(() {
                                         isChecked = value!;
+                                        //final app = Provider.of<AuthProvider>(context, listen: false);
+                                        //isChecked  = app.setCgu(value) ;
+
                                       });
                                     },
                                     shape: BeveledRectangleBorder(),
@@ -184,69 +191,68 @@ class _CguState extends State<Cgu> {
                     //SizedBox(height: 20),
                     Expanded(
                      child : Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      elevation: 0,
-                                      tapTargetSize: MaterialTapTargetSize
-                                          .shrinkWrap, // Remove click animation
-                                     // onPrimary: Color.fromRGBO(245, 245, 245, 1),
-                                      backgroundColor:
-                                          Color.fromRGBO(245, 245, 245, 1),
-                                      minimumSize: Size(width / 2 - 20, 50),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(6.0),
-                                      ),
-                                    ),
-                                    onPressed:  isChecked ? () {
-                                      // Add your onPressed logic here
-                                    } : null ,
-                                    child: TitleText(
-                                      data: 'Decliner',
-                                      color: Colors.red,
-                                      size: 13,
-                                      weight: FontWeight.normal,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.clip,
-                                      fontFamily: 'Poppins',
-                                    ),
-                                  ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      elevation: 0,
-                                      tapTargetSize: MaterialTapTargetSize
-                                          .shrinkWrap, // Remove click animation
-                                      backgroundColor: AppColors.marron,
-                                      minimumSize: Size(width / 2 - 20, 50),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(6.0),
-                                      ),
-                                    ),
-                                    onPressed: isChecked ? () {
-                                       Navigator.push(context, MaterialPageRoute(builder: (context)=> InfoPerso()));
-                              
-                                    } : null,
-                                    child: TitleText(
-                                      data: 'Accepter',
-                                      color: Colors.white,
-                                      size: 13,
-                                      weight: FontWeight.normal,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.clip,
-                                      fontFamily: 'Poppins',
-                                    ),
-                                  ),
-                                ],
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Flexible(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                tapTargetSize: MaterialTapTargetSize
+                                    .shrinkWrap, // Remove click animation
+                                // onPrimary: Color.fromRGBO(245, 245, 245, 1),
+                                backgroundColor:
+                                    Color.fromRGBO(245, 245, 245, 1),
+                                minimumSize: Size(width / 2 - 20, 50),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                ),
+                              ),
+                              onPressed:  isChecked ? () {
+                                // Add your onPressed logic here
+                              } : null ,
+                              child: TitleText(
+                                data: 'Decliner',
+                                color: Colors.red,
+                                size: 13,
+                                weight: FontWeight.normal,
+                                maxLines: 1,
+                                overflow: TextOverflow.clip,
+                                fontFamily: 'Poppins',
                               ),
                             ),
-
-                      
-                        
-                      
-                      
-                    
+                          ),
+                          SizedBox(width: 10,) ,
+                          Flexible(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                tapTargetSize: MaterialTapTargetSize
+                                    .shrinkWrap, // Remove click animation
+                                backgroundColor: AppColors.marron,
+                                minimumSize: Size(width / 2 - 20, 50),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                ),
+                              ),
+                              onPressed: isChecked ? () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> InfoPerso()));
+                                                          
+                              } : null,
+                              child: TitleText(
+                                data: 'Accepter',
+                                color: Colors.white,
+                                size: 13,
+                                weight: FontWeight.normal,
+                                maxLines: 1,
+                                overflow: TextOverflow.clip,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
 
                   ],
                 ),

@@ -36,6 +36,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: true, // or false based on your requirements
+
       body: Stack(
         children: [
            Container(
@@ -114,66 +116,70 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       child: TitleText(data: pages[currentIndex].description , color: Colors.black, size: 15, weight: FontWeight.w500, maxLines: 3, overflow: TextOverflow.clip, fontFamily: 'Poppins', textAlign: TextAlign.center,)) ,
                   SizedBox(height: 32.0),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       if (currentIndex != 0)
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            tapTargetSize: MaterialTapTargetSize
-                            .shrinkWrap, // Remove click animation
-                            //onPrimary: Color.fromRGBO(245, 245, 245, 1) ,
-                            backgroundColor: Color.fromRGBO(245, 245, 245, 1) ,
-                            minimumSize: Size(width /2-5, 50),
-                            maximumSize: Size(width / 2-5, 50),
+                        Flexible(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              tapTargetSize: MaterialTapTargetSize
+                              .shrinkWrap, // Remove click animation
+                              //onPrimary: Color.fromRGBO(245, 245, 245, 1) ,
+                              backgroundColor: Color.fromRGBO(245, 245, 245, 1) ,
+                              minimumSize: Size(width /2-5, 50),
+                              maximumSize: Size(width / 2-5, 50),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                currentIndex--;
+                              });
+                            },
+                            child: TitleText(data: 'Precedent', color: AppColors.marron, size: 18, weight: FontWeight.normal, maxLines: 1, overflow: TextOverflow.clip, fontFamily: 'Poppins'),
+                          ),
+                        ),
+                      Flexible(
+                        child: ElevatedButton(
+                           style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.marron,
+                             minimumSize: Size(
+                              currentIndex == 0 ? width * 3 / 4 : width / 2-20,
+                              50,
+                            ),
+                            maximumSize: Size(
+                              currentIndex == 0 ? width * 3 / 4 : width / 2-20,
+                              50,
+                            ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6.0),
                             ),
                           ),
                           onPressed: () {
-                            setState(() {
-                              currentIndex--;
-                            });
+                            if (currentIndex < pages.length - 1) {
+                              setState(() {
+                                currentIndex++;
+                              });
+                            } else {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> Welcome()));
+                            }
                           },
-                          child: TitleText(data: 'Precedent', color: AppColors.marron, size: 18, weight: FontWeight.normal, maxLines: 1, overflow: TextOverflow.clip, fontFamily: 'Poppins'),
+                          child: Text(currentIndex == pages.length - 1
+                            ? 'Terminer'
+                            : 'Suivant',
+                            style: GoogleFonts.getFont('Poppins',
+                            textStyle: TextStyle(
+                              color: Colors.white ,
+                              fontSize: 18,
+                              fontWeight: FontWeight.normal,
+                                overflow: TextOverflow.clip,
+                            )
+                            )
+                            ),
                         ),
-                      ElevatedButton(
-                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.marron,
-                           minimumSize: Size(
-                            currentIndex == 0 ? width * 3 / 4 : width / 2-20,
-                            50,
-                          ),
-                          maximumSize: Size(
-                            currentIndex == 0 ? width * 3 / 4 : width / 2-20,
-                            50,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6.0),
-                          ),
-                        ),
-                        onPressed: () {
-                          if (currentIndex < pages.length - 1) {
-                            setState(() {
-                              currentIndex++;
-                            });
-                          } else {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=> Welcome()));
-                          }
-                        },
-                        child: Text(currentIndex == pages.length - 1
-                          ? 'Terminer'
-                          : 'Suivant',
-                          style: GoogleFonts.getFont('Poppins',
-                          textStyle: TextStyle(
-                            color: Colors.white ,
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                              overflow: TextOverflow.clip,
-                          )
-                          )
-                          ),
                       ),
                     ],
                   ),
