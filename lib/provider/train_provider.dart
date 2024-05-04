@@ -5,6 +5,13 @@ class GareProvider extends ChangeNotifier {
   late TrainStationsResponse _selectedStation;
   late List<TrainStationsResponse>
       _trainStationsResponse; // Define trainStationsResponse here
+  late bool _parking;
+  late bool _parvis;
+  late bool _agence;
+
+  bool get parking => _parking;
+  bool get parvis => _parvis;
+  bool get agence => _agence;
 
   GareProvider() {
     // Initialize trainStationsResponse here, you can fetch it from wherever it's coming from

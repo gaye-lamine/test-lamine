@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:terappmobile/models/card_info.dart';
 import 'package:terappmobile/models/response/trains_station_response.dart';
+import 'package:terappmobile/models/response/voyage_user.dart';
 import 'package:terappmobile/models/voyage_info.dart';
 import 'package:terappmobile/provider/auth_provider.dart';
 import 'package:terappmobile/provider/seter_provider.dart';
@@ -26,7 +27,8 @@ class Accueil extends StatefulWidget {
 
 class _AccueilState extends State<Accueil> {
   String userName = "";
- late Future<List<TrainStationsResponse>> gareFuture;
+  late Future<List<TrainStationsResponse>> gareFuture;
+  late Future<List<VoyageData>> voyageFuture;
 
   Future<List<TrainStationsResponse>> gares() async {
     final ap = Provider.of<SeterProvider>(context, listen: false);
@@ -34,14 +36,20 @@ class _AccueilState extends State<Accueil> {
     return result;
   }
 
+  Future<List<VoyageData>> voyagesByUser() async {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    var id = Provider.of<AuthProvider>(context, listen: false).userId;
+    List<VoyageData> result = await ap.getUserByIdVoyageProvider(context, id);
+    return result;
+  }
 
- // String fullname = '';
+  // String fullname = '';
   /* List<CardInfo> cardinfo = [
     CardInfo(imageAsset: 'images/logoter.png', title: 'À savoir !', description: 'Aliquam eget purus sit malesuada tempor euismod. Aliquam eget purus sit malesuada tempor euismod.', audioFile: audioFile)
   ]; */
 
   List<CardInfo> cardInfoList = [];
-  List<VoyageInfo> voyageInfoList = [];
+  List<VoyageInfoResponse> voyageInfoList = [];
   /* List<String> gares = [
     'Gare de Dakar',
     'Gare de Thiaroye',
@@ -118,29 +126,26 @@ class _AccueilState extends State<Accueil> {
                           itemBuilder: (context, index) {
                             final gare = garesList[index];
                             return InkWell(
-                              onTap: () async {
-                                /* Your onTap logic here */
-                                print('gare');
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => TrainVoyage()),
-                                );
-                              },
-                              child: ListeGareWidget(trainStationsResponse: gare,)
-                            );
+                                onTap: () async {
+                                  /* Your onTap logic here */
+                                  print('gare');
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => TrainVoyage()),
+                                  );
+                                },
+                                child: ListeGareWidget(
+                                  trainStationsResponse: gare,
+                                ));
                           },
                         );
                       }
                     },
                   ),
                 ),
-
               ]),
-            )
-
-      
-        );
+            ));
   }
 
   void ajoutVoyageModal() {
@@ -326,7 +331,8 @@ class _AccueilState extends State<Accueil> {
 
     //getUserFromSP();
     gareFuture = gares();
-   // fullname = Provider.of<AuthProvider>(context, listen: false).fullname;
+    voyageFuture = voyagesByUser();
+    // fullname = Provider.of<AuthProvider>(context, listen: false).fullname;
     //print('----- user full name = ${fullname}');
 
     // Assuming the audio file is located at 'path/to/audio/file.mp3'
@@ -334,33 +340,58 @@ class _AccueilState extends State<Accueil> {
     File audioFile1 = File('audio/audio.mp3');
     File audioFile3 = File('audio/audio.mp3');
 
-    voyageInfoList = [
-      VoyageInfo(
-          id: 83511,
-          depart: 'Thiaroye',
-          arrive: 'Colobane',
-          prix: 500,
-          date: DateTime.now(),
-          classe: '2nde',
-          zone: '1'),
-      VoyageInfo(
-          id: 83511,
-          depart: 'Thiaroye',
-          arrive: 'Colobane',
-          prix: 500,
-          date: DateTime.now(),
-          classe: '2nde',
-          zone: '1'),
-      VoyageInfo(
-          id: 83511,
-          depart: 'Thiaroye',
-          arrive: 'Colobane',
-          prix: 500,
-          date: DateTime.now(),
-          classe: '2nde',
-          zone: '1'),
+    /* List<VoyageInfoResponse> voyageInfoList = [
+      VoyageInfoResponse(
+        idUser: 1,
+        codeProduit: 1,
+        nomCommercial: "1 Voyage QRcode (THIA/YEUM)",
+        limitesDeValidit: "",
+        nombreDePRiodes: "",
+        typeDePRiode: "",
+        tempsDAntiPassbackSec: 180,
+        tempsDeMultiValidationSec: 0,
+        validitCourseSimpleMin: 120,
+        voyagesTotaux: 1,
+        dateDeBasculement: "",
+        supports: '"Ticket Papier"',
+        profils: "",
+        prix: 500.0,
+      ),
+      VoyageInfoResponse(
+        idUser: 2,
+        codeProduit: 2,
+        nomCommercial: "1 Voyage QRcode (BAR/DIA)",
+        limitesDeValidit: "",
+        nombreDePRiodes: "",
+        typeDePRiode: "",
+        tempsDAntiPassbackSec: 180,
+        tempsDeMultiValidationSec: 0,
+        validitCourseSimpleMin: 120,
+        voyagesTotaux: 1,
+        dateDeBasculement: "",
+        supports: "Ticket Papier",
+        profils: "",
+        prix: 500.0,
+      ),
+      VoyageInfoResponse(
+        idUser: 2,
+        codeProduit: 2,
+        nomCommercial: "1 Voyage QRcode (BAR/DIA)",
+        limitesDeValidit: "",
+        nombreDePRiodes: "",
+        typeDePRiode: "",
+        tempsDAntiPassbackSec: 180,
+        tempsDeMultiValidationSec: 0,
+        validitCourseSimpleMin: 120,
+        voyagesTotaux: 1,
+        dateDeBasculement: "",
+        supports: "Ticket Papier",
+        profils: "",
+        prix: 500.0,
+      ),
+      // Add more objects as needed...
     ];
-
+ */
     cardInfoList = [
       CardInfo(
         imageAsset: 'images/logoter.png',
@@ -468,8 +499,7 @@ class _AccueilState extends State<Accueil> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TitleOption(
-                              data:
-                                  'Bonjour }',
+                              data: 'Bonjour }',
                               color: Colors.white,
                               size: 18,
                               weight: FontWeight.w600),
@@ -667,19 +697,175 @@ class _AccueilState extends State<Accueil> {
                   ),
                   SizedBox(height: 10),
                   TitleOption(
-                      data: 'Historique des voyages du jour',
+                      data: 'Historique des voyages',
                       color: Colors.black,
                       size: 20,
                       weight: FontWeight.w600),
                   Expanded(
-                    child: ListView.builder(
+                    child:FutureBuilder<List<VoyageData>>(
+  future: voyagesByUser(), // Replace Future.value with your actual future
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    } else if (snapshot.hasError) {
+      return Center(
+        child: Text('Error: ${snapshot.error}'),
+      );
+    } else {
+      List<VoyageData> voyageInfoList = snapshot.data!;
+      return ListView.builder(
+        reverse: true,
+        //padding: EdgeInsets.all(10),
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        itemCount: voyageInfoList.length,
+        itemBuilder: (context, index) {
+          VoyageData voyageInfo = voyageInfoList[index];
+          return Padding(
+            padding: EdgeInsets.all(10),
+            child: Container(
+              width: double.infinity,
+              height: 200,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Color.fromRGBO(208, 213, 221, 1)),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: AppColors.rouge,
+                          child: Image.asset('images/train.png'),
+                        ),
+                        SizedBox(
+                          width: 3,
+                        ),
+                        Spacer(),
+                  
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      height: 58,
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'images/trajet.png',
+                            height: 49,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TitleOption(
+                                data: "${snapshot.data![index].depart}", // voyageInfoList[index].depart,
+                                color: Color.fromRGBO(152, 162, 179, 1),
+                                size: 15,
+                                weight: FontWeight.w600,
+                              ),
+                              Spacer(),
+                              TitleOption(
+                                data: "${snapshot.data![index].destination}", //'/* ${voyageInfoList[index].arrive.toString()} */',
+                                color: Color.fromRGBO(152, 162, 179, 1),
+                                size: 15,
+                                weight: FontWeight.w600,
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Column(
+                            children: [
+                              TitleOption(
+                                data: '${snapshot.data![index].prix}" CFA',
+                                color: Colors.black,
+                                size: 16,
+                                weight: FontWeight.w600,
+                              ),
+                              Spacer(),
+                              TitleOption(
+                                data: '10 fev',
+                                color: Color.fromRGBO(152, 162, 179, 1),
+                                size: 15,
+                                weight: FontWeight.w600,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 10,
+                      decoration: BoxDecoration(
+                        //color: Colors.yellow,
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Color.fromRGBO(208, 213, 221, 1),
+                            width: 2.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Color.fromRGBO(208, 213, 221, 1),
+                          minRadius: 15,
+                          child: Image.asset('images/star.png'),
+                        ),
+                        SizedBox(
+                          width: 3,
+                        ),
+                        TitleOption(
+                          data: '2nde classe',
+                          color: Color.fromRGBO(152, 162, 179, 1),
+                          size: 18,
+                          weight: FontWeight.w600,
+                        ),
+                        Spacer(),
+                        Image.asset('images/classe.png'),
+                        SizedBox(
+                          width: 3,
+                        ),
+                        TitleOption(
+                          data: '1 zone',
+                          color: Color.fromRGBO(152, 162, 179, 1),
+                          size: 18,
+                          weight: FontWeight.w600,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
+  },
+),
+
+                    
+                    
+                    /*  ListView.builder(
                       reverse: true,
                       //padding: EdgeInsets.all(10),
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       itemCount: voyageInfoList.length,
                       itemBuilder: (context, index) {
-                        VoyageInfo voyageInfo = voyageInfoList[index];
+                        VoyageInfoResponse voyageInfo = voyageInfoList[index];
                         return Padding(
                           padding: EdgeInsets.all(10),
                           child: Container(
@@ -704,15 +890,15 @@ class _AccueilState extends State<Accueil> {
                                       SizedBox(
                                         width: 3,
                                       ),
-                                      TitleOption(
+                                      /* TitleOption(
                                           data: voyageInfoList[index]
                                               .id
                                               .toString(),
                                           color: AppColors.rouge,
                                           size: 20,
-                                          weight: FontWeight.w600),
+                                          weight: FontWeight.w600), */
                                       Spacer(),
-                                      GestureDetector(
+                                      /* GestureDetector(
                                         onTap: () {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
@@ -744,7 +930,7 @@ class _AccueilState extends State<Accueil> {
                                                     weight: FontWeight.w600)
                                               ]),
                                         ),
-                                      ),
+                                      ), */
                                     ],
                                   ),
                                   SizedBox(
@@ -763,16 +949,18 @@ class _AccueilState extends State<Accueil> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             TitleOption(
-                                                data: voyageInfoList[index]
-                                                    .depart,
+                                                data:
+                                                    "" /* voyageInfoList[index]
+                                                    .depart */
+                                                ,
                                                 color: Color.fromRGBO(
                                                     152, 162, 179, 1),
                                                 size: 15,
                                                 weight: FontWeight.w600),
                                             Spacer(),
                                             TitleOption(
-                                                data:
-                                                    '${voyageInfoList[index].arrive.toString()}',
+                                                data: "",
+                                                //'/* ${voyageInfoList[index].arrive.toString()} */',
                                                 color: Color.fromRGBO(
                                                     152, 162, 179, 1),
                                                 size: 15,
@@ -853,7 +1041,7 @@ class _AccueilState extends State<Accueil> {
                         );
                       },
                     ),
-                  ),
+                   */),
                 ],
               ),
             ),

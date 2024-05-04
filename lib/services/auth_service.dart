@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 import 'package:terappmobile/configs/config.dart';
 import 'package:terappmobile/models/request/auth_code_request.dart';
@@ -10,6 +11,9 @@ import 'package:terappmobile/models/request/authotp_request.dart';
 import 'package:terappmobile/models/response/auth_mobile_response.dart';
 import 'package:terappmobile/models/response/auth_register_response.dart';
 import 'package:terappmobile/models/response/authotp_response.dart';
+import 'package:terappmobile/models/response/trains_station_response.dart';
+import 'package:terappmobile/models/response/voyage_user.dart';
+import 'package:terappmobile/provider/auth_provider.dart';
 
 class AuthServices {
   /* ------------------- AuthService  -------------------*/
@@ -89,4 +93,34 @@ class AuthServices {
     }
   }
 
+  static Future<List<VoyageData>?> getUserByIdVoyageService(
+      BuildContext context, int userId) async {
+   // final app = Provider.of<AuthProvider>(context, listen: false);
+    /* int userId = app.userId;
+
+    if (userId == null) {
+      throw Exception('User ID is not available');
+    } */
+
+    final url = Uri.parse('http://localhost:8000/api/v1/voyage/$userId');
+
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 201) {
+        print(
+        'response get list voyage by iduser code   ${response.body.toString()}');
+          final responseData = jsonDecode(response.body);
+        final List<dynamic> voyageData = responseData as List<dynamic>;
+        final List<VoyageData> voyages = voyageData
+            .map((v) => VoyageData.fromJson(v))
+            .toList();
+        return voyages;
+        
+      } else {
+        throw Exception('Failed to load user voyage by id data');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch user  voyage by id data: $e');
+    }
+  }
 }

@@ -29,9 +29,11 @@ class AuthProvider extends ChangeNotifier {
   String? _fullname;
   String get fullname => _fullname!;
 
+  int? _userId;
+  int get userId => _userId!;
+
   String? _otp;
   String get otp => _otp!;
-
 
   late bool _cgu;
   bool get cgu => _cgu;
@@ -134,12 +136,11 @@ class AuthProvider extends ChangeNotifier {
     try {
       _authMobileRequest = authMobileRequest;
       _authMobileResponse = response;
-
-      // Data data = response?.data;
+      _userId = response!.data!.id;
 
       if (response?.status == 1) {
         print('user n exist pas');
-        _otp = response!.data!.otp! ;
+        _otp = response!.data!.otp!;
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Otp()),
@@ -153,7 +154,7 @@ class AuthProvider extends ChangeNotifier {
           _fullname = response.data!.fullname;
         }
         print('----- user exist -----');
-        
+
         /* // Save user data to SharedPreferences
         if (response?.data != null) {
           saveUserToSP(response!.data);
@@ -209,10 +210,9 @@ class AuthProvider extends ChangeNotifier {
       if (response != null && response.status != null && response.status == 0) {
         _authRegisterResponse = response;
         _fullname = response.data!.fullname!;
-
+        _userId = response!.data!.id;
         //saveUserToSP(response);
         //var username = await getUserFromSP().then((value) => null);
-
         print(response.status);
         Navigator.push(
           context,
@@ -230,6 +230,27 @@ class AuthProvider extends ChangeNotifier {
       }
     } catch (e) {
       throw Exception('Failed checking the register number: $e');
+    }
+  }
+
+  Future getUserByIdVoyageProvider(
+      BuildContext context, int user) async {
+    try {
+      final response = await AuthServices.getUserByIdVoyageService(context ,user);
+      if (response != null ) {
+
+        return response;
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Erreur lors du chargement "),
+            backgroundColor: Colors.red,
+          ),
+        );
+        print('Erreur de chargemeent voyage by user');
+      }
+    } catch (e) {
+      throw Exception('Failed checking voyage by user: $e');
     }
   }
 }

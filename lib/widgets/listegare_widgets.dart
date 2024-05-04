@@ -11,8 +11,7 @@ import 'package:terappmobile/utils/app_colors.dart';
 
 class ListeGareWidget extends StatelessWidget {
   final TrainStationsResponse trainStationsResponse;
-  ListeGareWidget({super.key, required  this.trainStationsResponse});
-
+  ListeGareWidget({super.key, required this.trainStationsResponse});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +20,7 @@ class ListeGareWidget extends StatelessWidget {
       child: Container(
         width: double.infinity - 20,
         height: 54,
+       
         child: Row(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           //crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,24 +41,39 @@ class ListeGareWidget extends StatelessWidget {
             ),
             Spacer(),
             GestureDetector(
-              onTap : (){
+              onTap: () {
                 // Update the selected station using Provider
+                Provider.of<GareProvider>(context, listen: false).agence ==
+                    trainStationsResponse.agence;
+                  // Update the selected station using Provider
+                Provider.of<GareProvider>(context, listen: false).parking ==
+                    trainStationsResponse.placeParking;
+                  // Update the selected station using Provider
+                Provider.of<GareProvider>(context, listen: false).parvis ==
+                    trainStationsResponse.parvis;
+                    
+
                 Provider.of<GareProvider>(context, listen: false)
                     .setSelectedStation(trainStationsResponse);
                 // Navigate to details screen
-                Navigator.push(context , MaterialPageRoute(builder: (context)=> GareDetail()));
-              } ,
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => GareDetail()));
+              },
               child: CircleAvatar(
                 backgroundColor: Colors.white,
                 minRadius: 15,
-                child: Image.asset('images/info.png',height: 20,),
+                child: Image.asset(
+                  'images/info.png',
+                  height: 20,
+                ),
               ),
             )
-
           ],
         ),
         decoration: BoxDecoration(
           color: Color.fromRGBO(242, 244, 247, 1),
+          borderRadius: BorderRadius.circular(6)
+
         ),
       ),
     );

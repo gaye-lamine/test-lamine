@@ -33,6 +33,7 @@ class AuthRegisterResponse {
 }
 
 class Data {
+  int? id;
   String? fullname;
   String? otp;
   String? adress;
@@ -41,6 +42,7 @@ class Data {
   bool? isSubscribe;
 
   Data({
+    required this.id,
     required this.fullname,
     required this.otp,
     required this.adress,
@@ -52,6 +54,7 @@ class Data {
   // Factory method to create an instance from JSON data
   factory Data.fromJson(Map<String, dynamic> json) {
     return Data(
+      id: json['fullname'],
       fullname: json['fullname'],
       otp: json['otp'],
       adress: json['adress'],
@@ -64,6 +67,7 @@ class Data {
   // Method to convert the object to a JSON format
   Map<String, dynamic> toJson() {
     return {
+      'id': this.id,
       'fullname': this.fullname,
       'otp': this.otp,
       'adress': this.adress,

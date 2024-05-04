@@ -215,9 +215,9 @@ class _GareDetailState extends State<GareDetail> {
                                   ),
                                   Row(
                                     children: [
-                                      Icon(Icons.check ,color: Colors.green, weight: 12,),
+                                      Icon (Provider.of<GareProvider>(context, listen: false).agence ? Icons.check : Icons.error ),
                                        TitleOption(
-                                        data: 'Disponible',
+                                        data: Provider.of<GareProvider>(context, listen: false).agence ? 'Non Disponible' : '',
                                         color: Color.fromRGBO(102, 112, 133, 1),
                                         size: 12,
                                         weight: FontWeight.w400,
@@ -324,7 +324,7 @@ class _GareDetailState extends State<GareDetail> {
                                   Row(
                                     children: [
                                       CircleAvatar(
-                                        backgroundColor: ,
+                                        //backgroundColor: ,
                                         child: Icon(
                                           Icons.check,
                                           color: Colors.green,
@@ -410,7 +410,7 @@ class _CommerceListItemState extends State<CommerceListItem> {
                 child:  Flexible(
                   child: CircleAvatar(
                     backgroundColor:isExpanded ? Colors.white :  Color.fromRGBO(242, 244, 247, 1) ,
-                    child: Icon(isExpanded ? Icons.more : Icons.expand_more)),
+                    child: Icon(isExpanded ? Icons.arrow_drop_down : Icons.expand_more)),
                 ),
                   /* onPressed: () {
                     setState(() {
@@ -422,7 +422,7 @@ class _CommerceListItemState extends State<CommerceListItem> {
             ),
         
         
-        SizedBox(height: 5,),
+        SizedBox(height: 8,),
 
       ],
     );
