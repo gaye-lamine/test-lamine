@@ -29,6 +29,8 @@ class _SplashScreenState extends State<Welcome> {
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: true, // or false based on your requirements
+
       body: SafeArea(
         child: Stack(
           children: [
@@ -115,6 +117,7 @@ class _SplashScreenState extends State<Welcome> {
                               ),
                             ),
                           ),
+                          SizedBox(width :10),
                           Flexible(
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(

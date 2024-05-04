@@ -54,6 +54,7 @@ class _SignUpState extends State<SignUp> {
     var width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      
       body: Stack(
         children: [
           Container(

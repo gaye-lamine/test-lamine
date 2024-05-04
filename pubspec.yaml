@@ -46,6 +46,7 @@ dependencies:
   http: ^1.1.2
   provider: ^6.1.1
   shared_preferences: ^2.2.3
+  line_icons: ^2.0.3
 
 
   
@@ -133,6 +134,13 @@ flutter:
     - images/timegreen.png
     - images/timered.png
     - images/check.png
+    - images/timered2.png
+    - images/parking.png
+    - images/parvis.png
+    - images/agence.png
+  
+
+    
     - images/detailgare.png
 
 

@@ -36,6 +36,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: true, // or false based on your requirements
+
       body: Stack(
         children: [
            Container(
