@@ -32,19 +32,25 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     final config = Config(
       botDelay: 3,
-      waitText: 'Bot Thinking...',
-      defaultResponseMessage: "Sorry! I didn't catch that!\nPlease try again!",
+      waitText: "entrain d'ecrire ...",
+      defaultResponseMessage: "desolé! je ne vous comprend pas!",
       keywords: [
         'bonjour',
         'salut',
-        'how are you',
+        "j'ai perdu mes bagages puisse les recupérées",
+        "comment faire un abonnement ?",
+        "comment recharger son abonnement ?",
+        "abonnement",
       ],
       response: [
-        'Hi\nHow can I assist you today?',
-        'Hello!\nHow can I be of help?',
-        'I am doing great!',
+        'Bonjour 👋🏾\nComment puissons nous vous aidez ?',
+        'Salut 👋🏾\nComment puissons nous vous aidez ?',
+        'veuillez nous contacter par 33 920 00 40 ou nous ecrire via whatsapp',
+        "Pour faire un abonnement, Se rendre dans l’une des agences commerciales du TER munit de sa pièce d’identitéCommuniquer les informations suivantes aux agents services voyageurs : âge, nom, prénom, numéro de téléphone, nom de la mère ainsi qu’une copie de la carte d’identité Se faire photographier.",
+        "Pour recharger votre compte,il faut se rendre aux guichets et des distributeurs de Titre de transport. ou  A distance sur l’application TER et site web.",
+        " Se rendre dans l’une des agences commerciales du TER munit de sa pièce d’identitéCommuniquer les informations suivantes aux agents services voyageurs : âge, nom, prénom, numéro de téléphone, nom de la mère ainsi qu’une copie de la carte d’identité Se faire photographier."
       ],
-      greetings: "Hi there👋🏾\nHow can I help you?",
+      greetings: "Bonjour 👋🏾\nComment puissons nous vous aidez?",
       headerText: 'TER voyage facile',
       subHeaderText: 'en ligne',
       buttonText: 'Aide et support',

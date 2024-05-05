@@ -235,7 +235,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
                       },
                       decoration: InputDecoration(
                         prefixIcon: Image.asset('images/person.png'),
-                        hintText: 'Ex: John Doe',
+                        hintText: "${getUser['data']!['fullname']}",
                         //prefixText: "Ex: John Doe",
                         hintStyle: TextStyle(fontSize: 16),
                         labelStyle: TextStyle(color: Colors.black38),
@@ -352,7 +352,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
                                 updateActivateState();
                               },
                               decoration: InputDecoration(
-                                hintText: '',
+                                hintText: "${getUser['data']!['phone']}",
                                 labelStyle: TextStyle(color: Colors.black38),
                                 fillColor: Colors.white,
                                 focusColor: Colors.grey,
