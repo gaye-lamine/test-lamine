@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:terappmobile/models/request/auth_code_request.dart';
@@ -143,6 +144,7 @@ class AuthProvider extends ChangeNotifier {
       if (response?.status == 1) {
         print('user n exist pas');
         _otp = response!.data!.otp!;
+        _otp = response!.data!.otp!;
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Otp()),
@@ -156,6 +158,7 @@ class AuthProvider extends ChangeNotifier {
           _fullname = response.data!.fullname;
         }
         print('----- user exist -----');
+
 
         /* // Save user data to SharedPreferences
         if (response?.data != null) {
