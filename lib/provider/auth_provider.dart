@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:terappmobile/models/request/auth_code_request.dart';
 import 'package:terappmobile/models/request/auth_register_request.dart';
 import 'package:terappmobile/models/request/authotp_request.dart';
@@ -12,7 +12,6 @@ import 'package:terappmobile/screens/auth/otp.dart';
 import 'package:terappmobile/screens/home/accueil.dart';
 import 'package:terappmobile/screens/home/home.dart';
 import 'package:terappmobile/services/auth_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider extends ChangeNotifier {
   AuthMobileRequest? _authMobileRequest;
@@ -159,6 +158,10 @@ class AuthProvider extends ChangeNotifier {
         if (response?.data != null) {
           saveUserToSP(response!.data);
         } */
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setInt('user_id', response!.data!.id!);
+        print('user data: ${response!.data!.id}');
 
         Navigator.push(
           context,

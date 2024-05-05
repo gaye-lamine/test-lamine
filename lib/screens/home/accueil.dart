@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:terappmobile/models/card_info.dart';
 import 'package:terappmobile/models/response/trains_station_response.dart';
@@ -14,7 +12,6 @@ import 'package:terappmobile/screens/ajout_voyage/ajout_voyage.dart';
 import 'package:terappmobile/screens/train/suivi_voyage.dart';
 import 'package:terappmobile/screens/train/train_voyage.dart';
 import 'package:terappmobile/utils/app_colors.dart';
-import 'package:terappmobile/utils/googlefonts.dart';
 import 'package:terappmobile/utils/title_option.dart';
 import 'package:terappmobile/widgets/customelevatedbutton.dart';
 import 'package:terappmobile/widgets/listegare_widgets.dart';

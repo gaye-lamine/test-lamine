@@ -1,19 +1,11 @@
-import 'package:flutter/material.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/semantics.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 import 'package:terappmobile/models/choice_train.dart';
+import 'package:terappmobile/provider/get_user_provider.dart';
 import 'package:terappmobile/screens/home/accueil.dart';
 import 'package:terappmobile/utils/app_colors.dart';
-import 'package:terappmobile/utils/googlefonts.dart';
 import 'package:terappmobile/utils/title_option.dart';
-import 'package:timeline_tile/timeline_tile.dart';
-import 'package:timelines/timelines.dart' as tl;
 
 class Ticket extends StatefulWidget {
   const Ticket({Key? key}) : super(key: key);
@@ -26,8 +18,6 @@ class _TicketState extends State<Ticket> {
   int selectedcarindex = 0;
   Type _selectedSegment = Type.secondeclasse;
   late int role; // Default role is entreprise
-
-
 
   List<ChoiceTrain> choiceTrains = [
     ChoiceTrain(id: 8355, depart: DateTime.now(), arrivee: DateTime.now()),
@@ -44,9 +34,9 @@ class _TicketState extends State<Ticket> {
     'Scale',
   ];
 
-  
   @override
   Widget build(BuildContext context) {
+    
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     const kTileHeight = 50.0;
@@ -95,7 +85,7 @@ class _TicketState extends State<Ticket> {
                   SizedBox(
                     width: 20,
                   ),
-                   Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -117,7 +107,6 @@ class _TicketState extends State<Ticket> {
                       ),
                     ],
                   ),
-                   
                 ],
               ),
             ),
@@ -178,8 +167,10 @@ class _TicketState extends State<Ticket> {
                         },
                       ),
                     ),
-                    SizedBox(height: 32,) ,
-                     TitleOption(
+                    SizedBox(
+                      height: 32,
+                    ),
+                    TitleOption(
                       data: 'Ticket pour 1 voyage',
                       color: Colors.black,
                       size: 25,
@@ -187,38 +178,43 @@ class _TicketState extends State<Ticket> {
                       maxLines: 1,
                       overflow: TextOverflow.clip,
                     ),
-                    SizedBox(height: 10,) ,
-                    if(_selectedSegment == Type.secondeclasse)
-                    Column(
-                     // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: 102,
-                              width: 110,
-                              decoration: BoxDecoration(
-                                 borderRadius: BorderRadius.circular(8),
-                                color: AppColors.beige 
+                    SizedBox(
+                      height: 10,
+                    ),
+                    if (_selectedSegment == Type.secondeclasse)
+                      Column(
+                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: 102,
+                                width: 110,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: AppColors.beige),
+                                child: Image.asset('images/ticket.png'),
                               ),
-                              child: Image.asset('images/ticket.png'),
-                            ),
-                            SizedBox(width: 10,),
-                            Expanded(child: Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Color.fromRGBO(245, 245, 245, 1)
+                              SizedBox(
+                                width: 10,
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                       TitleOption(
+                              Expanded(
+                                  child: Container(
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Color.fromRGBO(245, 245, 245, 1)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TitleOption(
                                           data: '1 zone',
                                           color: Colors.black,
                                           size: 20,
@@ -226,7 +222,7 @@ class _TicketState extends State<Ticket> {
                                           maxLines: 1,
                                           overflow: TextOverflow.clip,
                                         ),
-                                         TitleOption(
+                                        TitleOption(
                                           data: '500F',
                                           color: AppColors.marron,
                                           size: 25,
@@ -234,10 +230,9 @@ class _TicketState extends State<Ticket> {
                                           maxLines: 1,
                                           overflow: TextOverflow.clip,
                                         ),
-
-                                    ],
-                                  ) ,
-                                   Row(
+                                      ],
+                                    ),
+                                    Row(
                                       /* mainAxisAlignment:
                                           MainAxisAlignment.spaceAround */
                                       children: [
@@ -260,10 +255,315 @@ class _TicketState extends State<Ticket> {
                                         ),
                                       ],
                                     ),
-
-                                  Row(
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        TitleOption(
+                                          data: 'yeumbeul',
+                                          color: AppColors.marron,
+                                          size: 20,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                        Image.asset('images/v.png'),
+                                        TitleOption(
+                                          data: 'Bargny',
+                                          color: AppColors.marron,
+                                          size: 25,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ))
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                height: 102,
+                                width: 110,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: AppColors.beige),
+                                child: Image.asset('images/ticket.png'),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                  child: Container(
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Color.fromRGBO(245, 245, 245, 1)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TitleOption(
+                                          data: '1 zone',
+                                          color: Colors.black,
+                                          size: 20,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                        TitleOption(
+                                          data: '500F',
+                                          color: AppColors.marron,
+                                          size: 25,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      /* mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround */
+                                      children: [
+                                        TitleOption(
+                                          data: 'Dakar',
+                                          color: AppColors.marron,
+                                          size: 20,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                        Image.asset('images/v.png'),
+                                        TitleOption(
+                                          data: 'Thiaroye',
+                                          color: AppColors.marron,
+                                          size: 20,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        TitleOption(
+                                          data: 'yeumbeul',
+                                          color: AppColors.marron,
+                                          size: 20,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                        Image.asset('images/v.png'),
+                                        TitleOption(
+                                          data: 'Bargny',
+                                          color: AppColors.marron,
+                                          size: 20,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ))
+                            ],
+                          ),
+                          SizedBox(
+                            height: 6,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                height: 102,
+                                width: 110,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: AppColors.beige),
+                                child: Image.asset('images/ticket.png'),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                  child: Container(
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Color.fromRGBO(245, 245, 245, 1)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TitleOption(
+                                          data: '1 zone',
+                                          color: Colors.black,
+                                          size: 20,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                        TitleOption(
+                                          data: '500F',
+                                          color: AppColors.marron,
+                                          size: 20,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      /* mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround */
+                                      children: [
+                                        TitleOption(
+                                          data: 'Dakar',
+                                          color: AppColors.marron,
+                                          size: 20,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                        Image.asset('images/v.png'),
+                                        TitleOption(
+                                          data: 'Thiaroye',
+                                          color: AppColors.marron,
+                                          size: 20,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        TitleOption(
+                                          data: 'yeumbeul',
+                                          color: AppColors.marron,
+                                          size: 20,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                        Image.asset('images/v.png'),
+                                        TitleOption(
+                                          data: 'Bargny',
+                                          color: AppColors.marron,
+                                          size: 20,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ))
+                            ],
+                          ),
+                          SizedBox(
+                            height: 32,
+                          ),
+                          TitleOption(
+                            data: 'Forfait de 10 voyages',
+                            color: Colors.black,
+                            size: 24,
+                            weight: FontWeight.w500,
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Color.fromRGBO(245, 245, 245, 1)),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TitleOption(
+                                      data: '1 zone',
+                                      color: Colors.black,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                    ),
+                                    TitleOption(
+                                      data: '500F',
+                                      color: AppColors.marron,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                    ),
+                                  ],
+                                ),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: TitleOption(
+                                    data: 'Dès 450 l’unité',
+                                    color: Colors.black,
+                                    size: 14,
+                                    weight: FontWeight.w500,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.clip,
+                                  ),
+                                ),
+                                Row(
+                                  /* mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround */
+                                  children: [
+                                    TitleOption(
+                                      data: 'Dakar',
+                                      color: AppColors.marron,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                    ),
+                                    Image.asset('images/v2.png'),
+                                    TitleOption(
+                                      data: 'Thiaroye',
+                                      color: AppColors.marron,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     TitleOption(
                                       data: 'yeumbeul',
@@ -273,430 +573,125 @@ class _TicketState extends State<Ticket> {
                                       maxLines: 1,
                                       overflow: TextOverflow.clip,
                                     ),
-                                    Image.asset('images/v.png'),
+                                    Image.asset('images/v2.png'),
                                     TitleOption(
                                       data: 'Bargny',
                                       color: AppColors.marron,
-                                      size: 25,
+                                      size: 20,
                                       weight: FontWeight.w500,
                                       maxLines: 1,
                                       overflow: TextOverflow.clip,
                                     ),
                                   ],
                                 )
-                            ],
-                              ),
-                            ))
-                          ],
-                        )
-                        ,
-
-                        Row(
-                          children: [
-                            Container(
-                              height: 102,
-                              width: 110,
-                              decoration: BoxDecoration(
-                                 borderRadius: BorderRadius.circular(8),
-                                color: AppColors.beige 
-                              ),
-                              child: Image.asset('images/ticket.png'),
+                              ],
                             ),
-                            SizedBox(width: 10,),
-                            Expanded(child: Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(4),
+                            decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                color: Color.fromRGBO(245, 245, 245, 1)
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                       TitleOption(
-                                          data: '1 zone',
-                                          color: Colors.black,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                         TitleOption(
-                                          data: '500F',
-                                          color: AppColors.marron,
-                                          size: 25,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-
-                                    ],
-                                  ) ,
-                                   Row(
-                                      /* mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround */
-                                      children: [
-                                        TitleOption(
-                                          data: 'Dakar',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                        Image.asset('images/v.png'),
-                                        TitleOption(
-                                          data: 'Thiaroye',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                      ],
+                                color: Color.fromRGBO(245, 245, 245, 1)),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TitleOption(
+                                      data: '2 zones',
+                                      color: Colors.black,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
                                     ),
-                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        TitleOption(
-                                          data: 'yeumbeul',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                        Image.asset('images/v.png'),
-                                        TitleOption(
-                                          data: 'Bargny',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                      ],
-                                    )
-                                ],
-                              ),
-                            ))
-                          ],
-                        ),
-                        SizedBox(height: 6,),
-                        Row(
-                          children: [
-                            Container(
-                              height: 102,
-                              width: 110,
-                              decoration: BoxDecoration(
-                                 borderRadius: BorderRadius.circular(8),
-                                color: AppColors.beige 
-                              ),
-                              child: Image.asset('images/ticket.png'),
-                            ),
-                            SizedBox(width: 10,),
-                            Expanded(child: Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Color.fromRGBO(245, 245, 245, 1)
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                       TitleOption(
-                                          data: '1 zone',
-                                          color: Colors.black,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                         TitleOption(
-                                          data: '500F',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-
-                                    ],
-                                  ) ,
-                                   Row(
-                                      /* mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround */
-                                      children: [
-                                        TitleOption(
-                                          data: 'Dakar',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                        Image.asset('images/v.png'),
-                                        TitleOption(
-                                          data: 'Thiaroye',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                      ],
+                                    TitleOption(
+                                      data: '900F',
+                                      color: AppColors.marron,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
                                     ),
-                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        TitleOption(
-                                          data: 'yeumbeul',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                        Image.asset('images/v.png'),
-                                        TitleOption(
-                                          data: 'Bargny',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                      ],
-                                    )
-                                ],
-                              ),
-                            ))
-                          ],
-                        ),
-                        SizedBox(height: 32,),
-                       
-                        TitleOption(
-                          data: 'Forfait de 10 voyages',
-                          color: Colors.black,
-                          size: 24,
-                          weight: FontWeight.w500,
-                          maxLines: 1,
-                          overflow: TextOverflow.clip,
-                        ),
-                        SizedBox(height: 20,),
-                        Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Color.fromRGBO(245, 245, 245, 1)
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                       TitleOption(
-                                          data: '1 zone',
-                                          color: Colors.black,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                         TitleOption(
-                                          data: '500F',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-
-                                    ],
-                                  ) ,
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: TitleOption(
-                                    data: 'Dès 450 l’unité',
-                                    color: Colors.black,
-                                    size: 14,
-                                    weight: FontWeight.w500,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.clip,
-                                    ),
-                                  ),
-
-                                   Row(
-                                      /* mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround */
-                                      children: [
-                                        TitleOption(
-                                          data: 'Dakar',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                        Image.asset('images/v2.png'),
-                                        TitleOption(
-                                          data: 'Thiaroye',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                      ],
-                                    ),
-                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        TitleOption(
-                                          data: 'yeumbeul',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                        Image.asset('images/v2.png'),
-                                        TitleOption(
-                                          data: 'Bargny',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                      ],
-                                    )
-                                ],
-                              ),
-                            )
-                        ,Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Color.fromRGBO(245, 245, 245, 1)
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                       TitleOption(
-                                          data: '2 zones',
-                                          color: Colors.black,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                         TitleOption(
-                                          data: '900F',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-
-                                    ],
-                                  ) ,
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: TitleOption(
+                                  ],
+                                ),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: TitleOption(
                                     data: 'Dès 900 l’unité',
                                     color: Colors.black,
                                     size: 14,
                                     weight: FontWeight.w500,
                                     maxLines: 1,
                                     overflow: TextOverflow.clip,
-                                    ),
                                   ),
-
-                                   Row(
-                                      /* mainAxisAlignment:
+                                ),
+                                Row(
+                                  /* mainAxisAlignment:
                                           MainAxisAlignment.spaceAround */
-                                      children: [
-                                        TitleOption(
-                                          data: 'Dakar',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                        Image.asset('images/v2.png'),
-                                        TitleOption(
-                                          data: 'Bargny',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                      ],
+                                  children: [
+                                    TitleOption(
+                                      data: 'Dakar',
+                                      color: AppColors.marron,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
                                     ),
-                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        TitleOption(
-                                          data: 'Yeumbeul',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                        Image.asset('images/v2.png'),
-                                        TitleOption(
-                                          data: 'Diamniadio',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                      ],
-                                    )
-                                ],
-                              ),
+                                    Image.asset('images/v2.png'),
+                                    TitleOption(
+                                      data: 'Bargny',
+                                      color: AppColors.marron,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    TitleOption(
+                                      data: 'Yeumbeul',
+                                      color: AppColors.marron,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                    ),
+                                    Image.asset('images/v2.png'),
+                                    TitleOption(
+                                      data: 'Diamniadio',
+                                      color: AppColors.marron,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                        Container(
-                          padding: EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Color.fromRGBO(245, 245, 245, 1)
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                          Container(
+                            padding: EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Color.fromRGBO(245, 245, 245, 1)),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
                                     TitleOption(
                                       data: '3 zones',
                                       color: Colors.black,
@@ -705,7 +700,7 @@ class _TicketState extends State<Ticket> {
                                       maxLines: 1,
                                       overflow: TextOverflow.clip,
                                     ),
-                                      TitleOption(
+                                    TitleOption(
                                       data: '13500F',
                                       color: AppColors.marron,
                                       size: 20,
@@ -713,21 +708,19 @@ class _TicketState extends State<Ticket> {
                                       maxLines: 1,
                                       overflow: TextOverflow.clip,
                                     ),
-
-                                ],
-                              ) ,
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: TitleOption(
-                                data: 'Dès 1300f l’unité',
-                                color: Colors.black,
-                                size: 14,
-                                weight: FontWeight.w500,
-                                maxLines: 1,
-                                overflow: TextOverflow.clip,
+                                  ],
                                 ),
-                              ),
-
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: TitleOption(
+                                    data: 'Dès 1300f l’unité',
+                                    color: Colors.black,
+                                    size: 14,
+                                    weight: FontWeight.w500,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.clip,
+                                  ),
+                                ),
                                 Row(
                                   /* mainAxisAlignment:
                                       MainAxisAlignment.spaceAround */
@@ -751,43 +744,142 @@ class _TicketState extends State<Ticket> {
                                     ),
                                   ],
                                 ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    if (_selectedSegment == Type.premierclasse)
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: 102,
+                                width: 110,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: AppColors.beige),
+                                child: Image.asset('images/ticket.png'),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                  child: Container(
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Color.fromRGBO(245, 245, 245, 1)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TitleOption(
+                                          data: '1 zone',
+                                          color: Colors.black,
+                                          size: 20,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                        TitleOption(
+                                          data: '500F',
+                                          color: AppColors.marron,
+                                          size: 25,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      /* mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround */
+                                      children: [
+                                        TitleOption(
+                                          data: 'Dakar',
+                                          color: AppColors.marron,
+                                          size: 20,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                        Image.asset('images/v.png'),
+                                        TitleOption(
+                                          data: 'Thiaroye',
+                                          color: AppColors.marron,
+                                          size: 25,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        TitleOption(
+                                          data: 'yeumbeul',
+                                          color: AppColors.marron,
+                                          size: 20,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                        Image.asset('images/v.png'),
+                                        TitleOption(
+                                          data: 'Bargny',
+                                          color: AppColors.marron,
+                                          size: 25,
+                                          weight: FontWeight.w500,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ))
                             ],
                           ),
-                        )
-                    
-                      ],
-
-                    )
-                    ,if(_selectedSegment == Type.premierclasse)
-                    Column(
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: 102,
-                              width: 110,
-                              decoration: BoxDecoration(
-                                 borderRadius: BorderRadius.circular(8),
-                                color: AppColors.beige 
+                          Row(
+                            children: [
+                              Container(
+                                height: 102,
+                                width: 110,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: AppColors.beige),
+                                child: Image.asset('images/ticket.png'),
                               ),
-                              child: Image.asset('images/ticket.png'),
-                            ),
-                            SizedBox(width: 10,),
-                            Expanded(child: Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Color.fromRGBO(245, 245, 245, 1)
+                              SizedBox(
+                                width: 10,
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                       TitleOption(
+                              Expanded(
+                                  child: Container(
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Color.fromRGBO(245, 245, 245, 1)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TitleOption(
                                           data: '1 zone',
                                           color: Colors.black,
                                           size: 20,
@@ -795,32 +887,8 @@ class _TicketState extends State<Ticket> {
                                           maxLines: 1,
                                           overflow: TextOverflow.clip,
                                         ),
-                                         TitleOption(
+                                        TitleOption(
                                           data: '500F',
-                                          color: AppColors.marron,
-                                          size: 25,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-
-                                    ],
-                                  ) ,
-                                   Row(
-                                      /* mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround */
-                                      children: [
-                                        TitleOption(
-                                          data: 'Dakar',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                        Image.asset('images/v.png'),
-                                        TitleOption(
-                                          data: 'Thiaroye',
                                           color: AppColors.marron,
                                           size: 25,
                                           weight: FontWeight.w500,
@@ -829,80 +897,7 @@ class _TicketState extends State<Ticket> {
                                         ),
                                       ],
                                     ),
-                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        TitleOption(
-                                          data: 'yeumbeul',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                        Image.asset('images/v.png'),
-                                        TitleOption(
-                                          data: 'Bargny',
-                                          color: AppColors.marron,
-                                          size: 25,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                      ],
-                                    )
-                                ],
-                              ),
-                            ))
-                          ],
-                        )
-                         ,Row(
-                          children: [
-                            Container(
-                              height: 102,
-                              width: 110,
-                              decoration: BoxDecoration(
-                                 borderRadius: BorderRadius.circular(8),
-                                color: AppColors.beige 
-                              ),
-                              child: Image.asset('images/ticket.png'),
-                            ),
-                            SizedBox(width: 10,),
-                            Expanded(child: Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Color.fromRGBO(245, 245, 245, 1)
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                       TitleOption(
-                                          data: '1 zone',
-                                          color: Colors.black,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                         TitleOption(
-                                          data: '500F',
-                                          color: AppColors.marron,
-                                          size: 25,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-
-                                    ],
-                                  ) ,
-                                   Row(
+                                    Row(
                                       /* mainAxisAlignment:
                                           MainAxisAlignment.spaceAround */
                                       children: [
@@ -925,7 +920,7 @@ class _TicketState extends State<Ticket> {
                                         ),
                                       ],
                                     ),
-                                     Row(
+                                    Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
                                       children: [
@@ -948,38 +943,41 @@ class _TicketState extends State<Ticket> {
                                         ),
                                       ],
                                     )
-                                ],
+                                  ],
+                                ),
+                              ))
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                height: 102,
+                                width: 110,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: AppColors.beige),
+                                child: Image.asset('images/ticket.png'),
                               ),
-                            ))
-                          ],
-                        ),
-                         Row(
-                          children: [
-                            Container(
-                              height: 102,
-                              width: 110,
-                              decoration: BoxDecoration(
-                                 borderRadius: BorderRadius.circular(8),
-                                color: AppColors.beige 
+                              SizedBox(
+                                width: 10,
                               ),
-                              child: Image.asset('images/ticket.png'),
-                            ),
-                            SizedBox(width: 10,),
-                            Expanded(child: Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Color.fromRGBO(245, 245, 245, 1)
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                       TitleOption(
+                              Expanded(
+                                  child: Container(
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Color.fromRGBO(245, 245, 245, 1)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TitleOption(
                                           data: '1 zone',
                                           color: Colors.black,
                                           size: 20,
@@ -987,7 +985,7 @@ class _TicketState extends State<Ticket> {
                                           maxLines: 1,
                                           overflow: TextOverflow.clip,
                                         ),
-                                         TitleOption(
+                                        TitleOption(
                                           data: '500F',
                                           color: AppColors.marron,
                                           size: 20,
@@ -995,10 +993,9 @@ class _TicketState extends State<Ticket> {
                                           maxLines: 1,
                                           overflow: TextOverflow.clip,
                                         ),
-
-                                    ],
-                                  ) ,
-                                   Row(
+                                      ],
+                                    ),
+                                    Row(
                                       /* mainAxisAlignment:
                                           MainAxisAlignment.spaceAround */
                                       children: [
@@ -1021,7 +1018,7 @@ class _TicketState extends State<Ticket> {
                                         ),
                                       ],
                                     ),
-                                     Row(
+                                    Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
                                       children: [
@@ -1044,119 +1041,118 @@ class _TicketState extends State<Ticket> {
                                         ),
                                       ],
                                     )
-                                ],
-                              ),
-                            ))
-                          ],
-                        ),
-                        SizedBox(height: 32,),
-                        TitleOption(
-                          data: 'Forfait de 10 voyages',
-                          color: Colors.black,
-                          size: 24,
-                          weight: FontWeight.w500,
-                          maxLines: 1,
-                          overflow: TextOverflow.clip,
-                        ),
-                        SizedBox(height: 20,),
-                        Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
+                                  ],
+                                ),
+                              ))
+                            ],
+                          ),
+                          SizedBox(
+                            height: 32,
+                          ),
+                          TitleOption(
+                            data: 'Forfait de 10 voyages',
+                            color: Colors.black,
+                            size: 24,
+                            weight: FontWeight.w500,
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(4),
+                            decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                color: Color.fromRGBO(245, 245, 245, 1)
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                       TitleOption(
-                                          data: '1 zone',
-                                          color: Colors.black,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                         TitleOption(
-                                          data: '500F',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-
-                                    ],
-                                  ) ,
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: TitleOption(
+                                color: Color.fromRGBO(245, 245, 245, 1)),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TitleOption(
+                                      data: '1 zone',
+                                      color: Colors.black,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                    ),
+                                    TitleOption(
+                                      data: '500F',
+                                      color: AppColors.marron,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                    ),
+                                  ],
+                                ),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: TitleOption(
                                     data: 'Dès 450 l’unité',
                                     color: Colors.black,
                                     size: 14,
                                     weight: FontWeight.w500,
                                     maxLines: 1,
                                     overflow: TextOverflow.clip,
-                                    ),
                                   ),
-
-                                   Row(
-                                      /* mainAxisAlignment:
+                                ),
+                                Row(
+                                  /* mainAxisAlignment:
                                           MainAxisAlignment.spaceAround */
-                                      children: [
-                                        TitleOption(
-                                          data: 'Dakar',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                        Image.asset('images/v2.png'),
-                                        TitleOption(
-                                          data: 'Thiaroye',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                      ],
+                                  children: [
+                                    TitleOption(
+                                      data: 'Dakar',
+                                      color: AppColors.marron,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
                                     ),
-                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        TitleOption(
-                                          data: 'yeumbeul',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                        Image.asset('images/v2.png'),
-                                        TitleOption(
-                                          data: 'Bargny',
-                                          color: AppColors.marron,
-                                          size: 20,
-                                          weight: FontWeight.w500,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                      ],
-                                    )
-                                ],
-                              ),
-                            )
-                      ],
-
-                    )
-                 
+                                    Image.asset('images/v2.png'),
+                                    TitleOption(
+                                      data: 'Thiaroye',
+                                      color: AppColors.marron,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    TitleOption(
+                                      data: 'yeumbeul',
+                                      color: AppColors.marron,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                    ),
+                                    Image.asset('images/v2.png'),
+                                    TitleOption(
+                                      data: 'Bargny',
+                                      color: AppColors.marron,
+                                      size: 20,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      )
                   ],
                 ),
               ),
@@ -1175,5 +1171,3 @@ Map<Type, Color> TypeColors = <Type, Color>{
   Type.premierclasse: Colors.white,
   //Type.cerulean: const Color(0xff007ba7),
 };
-
-
