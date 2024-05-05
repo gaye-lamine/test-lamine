@@ -1,22 +1,9 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:terappmobile/models/card_info.dart';
-import 'package:terappmobile/models/voyage_info.dart';
-import 'package:terappmobile/screens/ajout_voyage/ajout_voyage.dart';
-import 'package:terappmobile/screens/home/accueil.dart';
-import 'package:terappmobile/screens/train/suivi_voyage.dart';
-import 'package:terappmobile/screens/train/train_voyage.dart';
 import 'package:terappmobile/utils/app_colors.dart';
-import 'package:terappmobile/utils/googlefonts.dart';
+import 'package:terappmobile/utils/bottom_sheet.dart';
 import 'package:terappmobile/utils/title_option.dart';
 import 'package:terappmobile/widgets/customelevatedbutton.dart';
-import 'package:terappmobile/widgets/listegare_widgets.dart';
-import 'package:voice_message_package/voice_message_package.dart';
 
 class CarteAbonnement extends StatefulWidget {
   @override
@@ -166,7 +153,6 @@ class _CarteAbonnementState extends State<CarteAbonnement> {
                 children: [
                   Stack(
                     children: [
-                      
                       /* Positioned(
                         bottom: 100,
                         child: Container(
@@ -183,15 +169,14 @@ class _CarteAbonnementState extends State<CarteAbonnement> {
                         width: double.infinity,
                         height: 230,
                         decoration: BoxDecoration(
-                          color: AppColors.rouge ,
-                          borderRadius: BorderRadius.circular(10)
-                        ),
+                            color: AppColors.rouge,
+                            borderRadius: BorderRadius.circular(10)),
                         child: Column(
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                 Image.asset(
+                                Image.asset(
                                   'images/logoter2.png',
                                   height: 100,
                                   width: 100,
@@ -202,38 +187,33 @@ class _CarteAbonnementState extends State<CarteAbonnement> {
                                   children: [
                                     TitleOption(
                                       data: 'Mouhamadou ',
-                                      color: Colors.white ,
+                                      color: Colors.white,
                                       size: 21,
                                       weight: FontWeight.w600,
                                       maxLines: 2,
                                     ),
                                     TitleOption(
                                       data: 'Coulibaly',
-                                      color: Colors.white ,
+                                      color: Colors.white,
                                       size: 21,
                                       weight: FontWeight.w600,
                                       maxLines: 2,
                                     ),
-                                    
-                                     ],
+                                  ],
                                 )
-
                               ],
-
-                                
-                            ) ,
+                            ),
                             Container(
                               width: double.infinity,
                               height: 95,
                               padding: EdgeInsets.all(7),
                               decoration: BoxDecoration(
-                                color: AppColors.beige ,
-                                borderRadius: BorderRadius.circular(10) ,
-
+                                color: AppColors.beige,
+                                borderRadius: BorderRadius.circular(10),
                               ),
                               child: Column(
                                 children: [
-                                   TitleOption(
+                                  TitleOption(
                                     data: 'Numéro de ma carte SamaTER',
                                     color: Colors.white,
                                     size: 21,
@@ -244,71 +224,61 @@ class _CarteAbonnementState extends State<CarteAbonnement> {
                                     padding: EdgeInsets.all(3),
                                     height: 40,
                                     decoration: BoxDecoration(
-                                      color: Colors.white ,
-                                      borderRadius: BorderRadius.circular(10)
-                                      
-                                    ),
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        
                                         TitleOption(
-                                        data: '123 456 789 ',
-                                        color: Colors.black,
-                                        size: 21,
-                                        weight: FontWeight.w600,
-                                        maxLines: 2,
-                                      ),
-
-                                       Container(
-                                    padding: EdgeInsets.all(3),
-                                    width: 100,
-                                    //height: 40,
-                                    decoration: BoxDecoration(
-                                      color: Color.fromRGBO(245, 245, 245, 1) ,
-                                      borderRadius: BorderRadius.circular(10)
-                                    ),
-                                    child: 
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: TitleOption(
-                                          data: 'Modifier',
-                                          color: AppColors.marron,
-                                          size: 14,
+                                          data: '123 456 789 ',
+                                          color: Colors.black,
+                                          size: 21,
                                           weight: FontWeight.w600,
                                           maxLines: 2,
-                                          ),
                                         ),
-                                    
-                                    )
-                                        
-
+                                        Container(
+                                          padding: EdgeInsets.all(3),
+                                          width: 100,
+                                          //height: 40,
+                                          decoration: BoxDecoration(
+                                              color: Color.fromRGBO(
+                                                  245, 245, 245, 1),
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: TitleOption(
+                                              data: 'Modifier',
+                                              color: AppColors.marron,
+                                              size: 14,
+                                              weight: FontWeight.w600,
+                                              maxLines: 2,
+                                            ),
+                                          ),
+                                        )
                                       ],
                                     ),
-
                                   )
-
                                 ],
                               ),
                             )
-                      
-                            
                           ],
                         ),
                       )
-                      
-                      
                     ],
-                  ) ,
-                  SizedBox(height: 20,) ,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Container(
                     width: double.infinity,
                     height: 200,
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10) ,
-                      color: Color.fromRGBO(245, 245, 245, 1)
-                    ),
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromRGBO(245, 245, 245, 1)),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -329,10 +299,9 @@ class _CarteAbonnementState extends State<CarteAbonnement> {
                               weight: FontWeight.w600,
                               maxLines: 2,
                             ),
-
                           ],
-                        ) ,
-                         Row(
+                        ),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TitleOption(
@@ -351,7 +320,7 @@ class _CarteAbonnementState extends State<CarteAbonnement> {
                             ),
                           ],
                         ),
-                         Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TitleOption(
@@ -368,10 +337,9 @@ class _CarteAbonnementState extends State<CarteAbonnement> {
                               weight: FontWeight.w600,
                               maxLines: 2,
                             ),
-                          ], 
-
+                          ],
                         ),
-                         Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TitleOption(
@@ -392,69 +360,75 @@ class _CarteAbonnementState extends State<CarteAbonnement> {
                         )
                       ],
                     ),
-                  ) ,
-                  SizedBox(height: 30,) ,
-                   Container(
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Container(
                     width: double.infinity,
                     height: 200,
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10) ,
-                      color: Color.fromRGBO(245, 245, 245, 1)
-                    ),
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromRGBO(245, 245, 245, 1)),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TitleOption(
-                              data: 'Valable jusqu’au',
-                              color: Colors.black54,
-                              size: 16,
-                              weight: FontWeight.w600,
-                              maxLines: 2,
-                            ),
-                            TitleOption(
-                              data: '10 Mars 2024',
-                              color: Colors.black,
-                              size: 16,
-                              weight: FontWeight.w600,
-                              maxLines: 2,
-                            ),
-                           
-                          
-                          ],
-                        ),
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TitleOption(
+                                data: 'Valable jusqu’au',
+                                color: Colors.black54,
+                                size: 16,
+                                weight: FontWeight.w600,
+                                maxLines: 2,
+                              ),
+                              TitleOption(
+                                data: '10 Mars 2024',
+                                color: Colors.black,
+                                size: 16,
+                                weight: FontWeight.w600,
+                                maxLines: 2,
+                              ),
+                            ],
+                          ),
                           LinearPercentIndicator(
-                        lineHeight: 10.0,
-                        percent: 0.33,
-                        animation: true,
-                        width: 328,
-                        progressColor: const Color(0xff708B75),
-                        backgroundColor: const Color(0xffDFE083),
-                        barRadius: const Radius.circular(20),
-                      ),
-                      CustomElevatedButton(
-                      text: 'Enregistrer les modifications',
-                      textColor: Colors.white,
-                      backgroundColor: AppColors.marron,
-                      borderColor: AppColors.marron,
-                      borderRadius: 10,
-                      width: double.infinity,
-                      height: 55,
-                      onPressed: () {})
-
-                 
-                      ]
-                    
-                    
-                    ),
-                    
-                    
-                    ) ,
-                     
-                
+                            lineHeight: 10.0,
+                            percent: 0.33,
+                            animation: true,
+                            width: 328,
+                            progressColor: const Color(0xff708B75),
+                            backgroundColor: const Color(0xffDFE083),
+                            barRadius: const Radius.circular(20),
+                          ),
+                          CustomElevatedButton(
+                            text: 'renouveller mon abonnement',
+                            textColor: Colors.white,
+                            backgroundColor: AppColors.marron,
+                            borderColor: AppColors.marron,
+                            borderRadius: 10,
+                            width: double.infinity,
+                            height: 55,
+                            onPressed: () {
+                              showModalBottomSheet(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
+                                  ),
+                                ),
+                                isScrollControlled: true,
+                                backgroundColor: Colors.white,
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return const BottomSheetWidget();
+                                },
+                              );
+                            },
+                          )
+                        ]),
+                  ),
                 ],
               ),
             ),

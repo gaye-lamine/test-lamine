@@ -1,25 +1,16 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:terappmobile/models/card_info.dart';
-import 'package:terappmobile/models/voyage_info.dart';
-import 'package:terappmobile/screens/ajout_voyage/ajout_voyage.dart';
-import 'package:terappmobile/screens/home/accueil.dart';
+import 'package:provider/provider.dart';
+import 'package:terappmobile/provider/get_user_provider.dart';
 import 'package:terappmobile/screens/home/carte_abonnement.dart';
 import 'package:terappmobile/screens/home/home.dart';
 import 'package:terappmobile/screens/home/modify_profile.dart';
-import 'package:terappmobile/screens/train/suivi_voyage.dart';
-import 'package:terappmobile/screens/train/train_voyage.dart';
 import 'package:terappmobile/utils/app_colors.dart';
-import 'package:terappmobile/utils/googlefonts.dart';
 import 'package:terappmobile/utils/title_option.dart';
-import 'package:terappmobile/widgets/customelevatedbutton.dart';
-import 'package:terappmobile/widgets/listegare_widgets.dart';
-import 'package:voice_message_package/voice_message_package.dart';
+import 'package:whatsapp_chatbot/whatsapp_chatbot.dart';
 
 class Profile extends StatefulWidget {
+  final List<String> keywords = [];
+
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -28,6 +19,7 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
+    Provider.of<GetUserProvider>(context, listen: false).fetchUser();
   }
 
   @override
@@ -38,11 +30,39 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    final config = Config(
+      botDelay: 3,
+      waitText: 'Bot Thinking...',
+      defaultResponseMessage: "Sorry! I didn't catch that!\nPlease try again!",
+      keywords: [
+        'bonjour',
+        'salut',
+        'how are you',
+      ],
+      response: [
+        'Hi\nHow can I assist you today?',
+        'Hello!\nHow can I be of help?',
+        'I am doing great!',
+      ],
+      greetings: "Hi there👋🏾\nHow can I help you?",
+      headerText: 'TER voyage facile',
+      subHeaderText: 'en ligne',
+      buttonText: 'Aide et support',
+      buttonColor: const Color.fromARGB(255, 73, 4, 4),
+      chatIcon: const Icon(Icons.check),
+      headerColor: const Color.fromARGB(255, 73, 4, 4),
+      message: "Bonjour, j'ai besoin d'aide.",
+      phoneNumber: '+221706979903',
+      chatBackgroundColor: const Color.fromARGB(255, 238, 231, 223),
+      onlineIndicator: const Color.fromARGB(255, 37, 211, 102),
+    );
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    var getUser =
+        Provider.of<GetUserProvider>(context, listen: false).getUserResponse;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
       body: Stack(
         children: [
           Container(
@@ -70,7 +90,8 @@ class _ProfileState extends State<Profile> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Home()));
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Home()));
                     },
                     child: Container(
                       width: 45,
@@ -91,7 +112,7 @@ class _ProfileState extends State<Profile> {
                     height: 20,
                   ),
                   Container(
-                    padding: EdgeInsets.all(5),
+                    padding: EdgeInsets.all(10),
                     height: 160,
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -100,30 +121,39 @@ class _ProfileState extends State<Profile> {
                     child: Column(
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Image.asset(
                               'images/profil2.png',
                               height: 100,
                               width: 100,
                             ),
+                            const SizedBox(
+                              width: 10,
+                            ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 TitleOption(
-                                  data: ' Mouhamadou Coulibaly',
+                                  data: '${getUser['data']!['fullname']}',
                                   color: AppColors.marron,
-                                  size: 21,
-                                  weight: FontWeight.w600,
+                                  size: 18,
+                                  weight: FontWeight.w700,
                                   maxLines: 1,
                                 ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
                                 TitleOption(
-                                  data: '+221 77 123 45 67',
+                                  data: '${getUser['data']!['phone']}',
                                   color: Color.fromRGBO(152, 162, 179, 1),
                                   size: 16,
-                                  weight: FontWeight.w600,
+                                  weight: FontWeight.w500,
                                   maxLines: 1,
+                                ),
+                                const SizedBox(
+                                  height: 10,
                                 ),
                                 GestureDetector(
                                   onTap: () {
@@ -260,7 +290,7 @@ class _ProfileState extends State<Profile> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 TitleOption(
-                                  data: 'M. Coulibaly ',
+                                  data: '${getUser['data']!['fullname']}',
                                   color: Colors.white,
                                   size: 22,
                                   weight: FontWeight.w700,
@@ -381,20 +411,24 @@ class _ProfileState extends State<Profile> {
                         Image.asset('images/exit.png'),
                         TitleOption(
                           data: 'Se déconnecter',
-                          color: AppColors.rouge,
+                          color: const Color(0xffE30024),
                           size: 20,
-                          weight: FontWeight.w700,
+                          weight: FontWeight.w500,
                           maxLines: 1,
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  const SizedBox(
+                    height: 70,
+                  ),
 
                   //
                 ],
               ),
             ),
           ),
+          WhatsappChatBot(settings: config)
         ],
       ),
     );

@@ -48,6 +48,8 @@ dependencies:
   shared_preferences: ^2.2.3
   line_icons: ^2.0.3
   font_awesome_flutter: ^10.7.0
+  whatsapp_chatbot: ^1.0.0
+  flutter_icon_snackbar: ^1.1.7
 
 
   
@@ -138,6 +140,8 @@ flutter:
     - images/timered2.png
     - images/parking.png
     - images/parvis.png
+    - images/logoOM.png
+    - images/logoMI.png
     - images/agence.png
   
 

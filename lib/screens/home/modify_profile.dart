@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:terappmobile/provider/get_user_provider.dart';
+import 'package:terappmobile/provider/update_user_infos_provider.dart';
 import 'package:terappmobile/utils/app_colors.dart';
 import 'package:terappmobile/utils/title_option.dart';
 import 'package:terappmobile/widgets/customelevatedbutton.dart';
@@ -26,6 +28,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
     nomController = TextEditingController();
     addressController = TextEditingController();
     carteController = TextEditingController();
+    Provider.of<GetUserProvider>(context, listen: false).fetchUser();
 
     nomController.addListener(updateActivateState);
     addressController.addListener(updateActivateState);
@@ -66,8 +69,18 @@ class _ModifyProfileState extends State<ModifyProfile> {
 
   @override
   Widget build(BuildContext context) {
-    var getUserProvider = Provider.of<GetUserProvider>(context, listen: false);
-    getUserProvider.fetchUser();
+    var updateUserProvider =
+        Provider.of<UpdateUserInfosProvider>(context, listen: false);
+    var getUser =
+        Provider.of<GetUserProvider>(context, listen: false).getUserResponse;
+    var updateUser =
+        Provider.of<UpdateUserInfosProvider>(context, listen: false)
+            .updateResponse;
+
+    print(updateUser);
+    print("l'utilisateur est ${getUser['data']!['fullname']}");
+    print("l'utilisateur est ${getUser['data']!['adress']!}");
+    print("Profile $getUser");
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -182,14 +195,14 @@ class _ModifyProfileState extends State<ModifyProfile> {
                           )
                         ]),
                         TitleOption(
-                          data: 'Mouhamadou Coulibaly ',
+                          data: "${getUser['data']!['fullname']}".split(' ')[0],
                           color: Colors.black87,
                           size: 18,
                           weight: FontWeight.w700,
                           maxLines: 2,
                         ),
                         TitleOption(
-                          data: '+221 77 123 45 67',
+                          data: "${getUser['data']!['phone']}",
                           color: Colors.grey,
                           size: 16,
                           weight: FontWeight.w700,
@@ -214,7 +227,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
                     height: 8,
                   ),
                   SizedBox(
-                    height: 70,
+                    height: 50,
                     child: TextField(
                       controller: nomController,
                       onChanged: (value) {
@@ -252,7 +265,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
                     height: 8,
                   ),
                   SizedBox(
-                    height: 70,
+                    height: 50,
                     child: TextField(
                       controller: addressController,
                       onChanged: (value) {
@@ -325,7 +338,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
                           ),
                           Container(
                             width: 250,
-                            height: 70,
+                            height: 50,
                             decoration: BoxDecoration(
                                 //color: Color.fromRGBO(245, 245, 245, 1),
                                 /*  border: Border.all(
@@ -360,14 +373,29 @@ class _ModifyProfileState extends State<ModifyProfile> {
                     height: 20,
                   ),
                   CustomElevatedButton(
-                      text: 'Enregistrer les modifications',
-                      textColor: Colors.white,
-                      backgroundColor: AppColors.marron,
-                      borderColor: AppColors.marron,
-                      borderRadius: 10,
-                      width: double.infinity,
-                      height: 55,
-                      onPressed: () {})
+                    text: 'Enregistrer les modifications',
+                    textColor: Colors.white,
+                    backgroundColor: AppColors.marron,
+                    borderColor: AppColors.marron,
+                    borderRadius: 10,
+                    width: double.infinity,
+                    height: 55,
+                    onPressed: () {
+                      updateUserProvider.fullname = nomController.text;
+                      updateUserProvider.adress = addressController.text;
+                      updateUserProvider.phone = phoneNumberController.text;
+                      updateUserProvider.updateUser();
+
+                      IconSnackBar.show(
+                        context,
+                        snackBarType: SnackBarType.fail,
+                        snackBarStyle: const SnackBarStyle(
+                          maxLines: 3,
+                        ),
+                        label: 'Succès, modification reussi !',
+                      );
+                    },
+                  )
 
                   //
                 ],

@@ -16,17 +16,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
     PageModel(
       backgroundImage: 'images/ob1.png',
       title: 'Informations en temps réel',
-      description: 'Recevez des notifications pour rester informé à chaque étape de votre voyage et être au courant déventuels événements',
+      description:
+          'Recevez des notifications pour rester informé à chaque étape de votre voyage et être au courant déventuels événements',
     ),
     PageModel(
       backgroundImage: 'images/ob2.png',
       title: 'Trajets occasionnels',
-      description: 'Explorez le plan de la ligne avec votre application, ainsi que les tarifs pour chaque zone. Profitez pleinement de nos tarifs avantageux.',
+      description:
+          'Explorez le plan de la ligne avec votre application, ainsi que les tarifs pour chaque zone. Profitez pleinement de nos tarifs avantageux.',
     ),
     PageModel(
       backgroundImage: 'images/ob3.png',
       title: 'Abonnement carte',
-      description: 'Désormais, au sein de votre application, vous avez la possibilité de recharger votre carte d’abonnement où que vous soyez.',
+      description:
+          'Désormais, au sein de votre application, vous avez la possibilité de recharger votre carte d’abonnement où que vous soyez.',
     ),
   ];
   int currentIndex = 0;
@@ -40,13 +43,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
       body: Stack(
         children: [
-           Container(
+          Container(
             height: double.infinity,
             width: double.infinity,
           ),
           Container(
-            
-            height: height - height / 3 +100,
+            height: height - height / 3 + 100,
             child: Image.asset(
               pages[currentIndex].backgroundImage,
               fit: BoxFit.cover,
@@ -65,7 +67,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   children: [
                     for (int i = 0; i < pages.length; i++)
                       Container(
-                        margin: EdgeInsets.all(2.0),
+                        padding: const EdgeInsets.all(20.0),
                         width: 20.0,
                         height: 3.0,
                         decoration: BoxDecoration(
@@ -88,13 +90,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
             ),
           ),
           Positioned.fill(
-            top: height-height/3,
+            top: height - height / 3,
             child: Container(
               //color: Colors.red,
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
-              ),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20))),
               height: 300,
               width: width,
               padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -105,15 +108,51 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                    Align( alignment: Alignment.center,child: TitleOption(data: pages[currentIndex].title , color: AppColors.marron, size: 24, weight: FontWeight.bold, maxLines: 1, overflow: TextOverflow.clip, fontFamily: 'SFProDisplay' , textAlign: TextAlign.center,)),
-                    SizedBox(width: 2,),
-                    (currentIndex == 2)?
-                    Align( alignment: Alignment.center,child: TitleOption(data: 'SamaTER' , color: AppColors.beige, size: 24, weight: FontWeight.normal, maxLines: 1, overflow: TextOverflow.clip, fontFamily: 'SFProDisplay' , textAlign: TextAlign.center, style: FontStyle.italic,)) : Text(''),
-                  ],),
+                      Align(
+                          alignment: Alignment.center,
+                          child: TitleOption(
+                            data: pages[currentIndex].title,
+                            color: AppColors.marron,
+                            size: 24,
+                            weight: FontWeight.bold,
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
+                            fontFamily: 'SFProDisplay',
+                            textAlign: TextAlign.center,
+                          )),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      (currentIndex == 2)
+                          ? Align(
+                              alignment: Alignment.center,
+                              child: TitleOption(
+                                data: 'SamaTER',
+                                color: AppColors.beige,
+                                size: 24,
+                                weight: FontWeight.normal,
+                                maxLines: 1,
+                                overflow: TextOverflow.clip,
+                                fontFamily: 'SFProDisplay',
+                                textAlign: TextAlign.center,
+                                style: FontStyle.italic,
+                              ))
+                          : Text(''),
+                    ],
+                  ),
                   SizedBox(height: 16.0),
                   Align(
                       alignment: Alignment.center,
-                      child: TitleText(data: pages[currentIndex].description , color: Colors.black, size: 15, weight: FontWeight.w500, maxLines: 3, overflow: TextOverflow.clip, fontFamily: 'Poppins', textAlign: TextAlign.center,)) ,
+                      child: TitleText(
+                        data: pages[currentIndex].description,
+                        color: Colors.black,
+                        size: 15,
+                        weight: FontWeight.w500,
+                        maxLines: 3,
+                        overflow: TextOverflow.clip,
+                        fontFamily: 'Poppins',
+                        textAlign: TextAlign.center,
+                      )),
                   SizedBox(height: 32.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -125,11 +164,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             style: ElevatedButton.styleFrom(
                               elevation: 0,
                               tapTargetSize: MaterialTapTargetSize
-                              .shrinkWrap, // Remove click animation
+                                  .shrinkWrap, // Remove click animation
                               //onPrimary: Color.fromRGBO(245, 245, 245, 1) ,
-                              backgroundColor: Color.fromRGBO(245, 245, 245, 1) ,
-                              minimumSize: Size(width /2-5, 50),
-                              maximumSize: Size(width / 2-5, 50),
+                              backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+                              minimumSize: Size(width / 2 - 5, 50),
+                              maximumSize: Size(width / 2 - 5, 50),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(6.0),
                               ),
@@ -139,19 +178,30 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                 currentIndex--;
                               });
                             },
-                            child: TitleText(data: 'Precedent', color: AppColors.marron, size: 18, weight: FontWeight.normal, maxLines: 1, overflow: TextOverflow.clip, fontFamily: 'Poppins'),
+                            child: TitleText(
+                                data: 'Precedent',
+                                color: AppColors.marron,
+                                size: 18,
+                                weight: FontWeight.normal,
+                                maxLines: 1,
+                                overflow: TextOverflow.clip,
+                                fontFamily: 'Poppins'),
                           ),
                         ),
                       Flexible(
                         child: ElevatedButton(
-                           style: ElevatedButton.styleFrom(
+                          style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.marron,
-                             minimumSize: Size(
-                              currentIndex == 0 ? width * 3 / 4 : width / 2-20,
+                            minimumSize: Size(
+                              currentIndex == 0
+                                  ? width * 3 / 4
+                                  : width / 2 - 20,
                               50,
                             ),
                             maximumSize: Size(
-                              currentIndex == 0 ? width * 3 / 4 : width / 2-20,
+                              currentIndex == 0
+                                  ? width * 3 / 4
+                                  : width / 2 - 20,
                               50,
                             ),
                             shape: RoundedRectangleBorder(
@@ -164,27 +214,30 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                 currentIndex++;
                               });
                             } else {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> Welcome()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Welcome()));
                             }
                           },
-                          child: Text(currentIndex == pages.length - 1
-                            ? 'Terminer'
-                            : 'Suivant',
-                            style: GoogleFonts.getFont('Poppins',
-                            textStyle: TextStyle(
-                              color: Colors.white ,
-                              fontSize: 18,
-                              fontWeight: FontWeight.normal,
-                                overflow: TextOverflow.clip,
-                            )
-                            )
-                            ),
+                          child: Text(
+                              currentIndex == pages.length - 1
+                                  ? 'Terminer'
+                                  : 'Suivant',
+                              style: GoogleFonts.getFont('Poppins',
+                                  textStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal,
+                                    overflow: TextOverflow.clip,
+                                  ))),
                         ),
                       ),
                     ],
                   ),
                 ],
-              ), ),
+              ),
+            ),
           ),
         ],
       ),

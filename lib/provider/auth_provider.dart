@@ -1,16 +1,19 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:terappmobile/models/request/auth_code_request.dart';
 import 'package:terappmobile/models/request/auth_register_request.dart';
 import 'package:terappmobile/models/request/authotp_request.dart';
 import 'package:terappmobile/models/response/auth_mobile_response.dart';
 import 'package:terappmobile/models/response/auth_register_response.dart';
+import 'package:terappmobile/provider/get_user_provider.dart';
+import 'package:terappmobile/provider/update_user_infos_provider.dart';
 import 'package:terappmobile/screens/auth/cgu.dart';
 import 'package:terappmobile/screens/auth/otp.dart';
 import 'package:terappmobile/screens/home/accueil.dart';
-import 'package:terappmobile/screens/home/home.dart';
+import 'package:terappmobile/screens/home/profile.dart';
 import 'package:terappmobile/services/auth_service.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -160,12 +163,16 @@ class AuthProvider extends ChangeNotifier {
         } */
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setInt('user_id', response!.data!.id!);
-        print('user data: ${response!.data!.id}');
+        // ignore: use_build_context_synchronously
+        Provider.of<GetUserProvider>(context, listen: false).id =
+            response!.data!.id!;
+        // ignore: use_build_context_synchronously
+        Provider.of<UpdateUserInfosProvider>(context, listen: false).id =
+            response!.data!.id!;
 
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Accueil()),
+          MaterialPageRoute(builder: (context) => Profile()),
         );
         notifyListeners();
       }
@@ -219,7 +226,7 @@ class AuthProvider extends ChangeNotifier {
         print(response.status);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Home()),
+          MaterialPageRoute(builder: (context) => Accueil()),
         );
         return response;
       } else {

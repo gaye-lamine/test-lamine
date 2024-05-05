@@ -9,6 +9,7 @@ class Config {
   static const String authValidationCodeApi = "/api/v1/verify-otp";
   static const String authRegisterApi = "/api/v1/register";
   static const String getUser = "/api/v1/register/";
+  static const String updateUser = "/api/v1/register";
 
   /* ------------    Seter endpoint     --------------- */
   static const String allTrainsStation = "/gares";

@@ -269,7 +269,7 @@ class _SignUpState extends State<SignUp> {
                               }
                             : null,
                         child: TitleText(
-                          data: 'Se connecter',
+                          data: 'Recevoir le OTP',
                           color: Colors.white,
                           size: 13,
                           weight: FontWeight.normal,

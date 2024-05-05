@@ -6,16 +6,14 @@ import 'package:http/http.dart' as http;
 import 'package:terappmobile/configs/config.dart';
 
 class GetUserProvider extends ChangeNotifier {
-  int id = 1;
+   int id=1;
 
   Map<String, dynamic> getUserResponse = {};
 
   Future<Map<String, dynamic>> fetchUser() async {
-    
     final Uri apiUrl = Uri.parse("${Config.apiUrl}${Config.getUser}$id");
     try {
-      final http.Response response =
-          await http.get(apiUrl);
+      final http.Response response = await http.get(apiUrl);
 
       if (response.statusCode == 200) {
         getUserResponse = jsonDecode(response.body);
