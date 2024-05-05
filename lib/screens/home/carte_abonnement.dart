@@ -357,6 +357,60 @@ class _CarteAbonnementState extends State<CarteAbonnement> {
                               maxLines: 2,
                             ),
                           ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        GestureDetector(
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                                left: 25, right: 25, top: 15, bottom: 15),
+                            height: 50,
+                            width: 330,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(6)),
+                              border: Border.all(width: 1),
+                              color: Colors.white,
+                            ),
+                            child: const Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.qr_code_scanner),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Voir le code QR ',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          onTap: () {
+                            showModalBottomSheet(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20),
+                                ),
+                              ),
+                              isScrollControlled: true,
+                              backgroundColor: Colors.white,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  padding: const EdgeInsets.all(20),
+                                  child: Image.asset("images/qr.png"),
+                                );
+                              },
+                            );
+                          },
                         )
                       ],
                     ),

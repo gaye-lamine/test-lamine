@@ -5,14 +5,7 @@ import 'package:terappmobile/provider/get_user_provider.dart';
 import 'package:terappmobile/provider/seter_provider.dart';
 import 'package:terappmobile/provider/train_provider.dart';
 import 'package:terappmobile/provider/update_user_infos_provider.dart';
-import 'package:terappmobile/screens/home/ticket.dart';
-import 'package:terappmobile/screens/auth/sign_up.dart';
-import 'package:terappmobile/screens/auth/splash.dart';
-import 'package:terappmobile/screens/train/gare_detail.dart';
-import 'package:terappmobile/screens/train/suivi_voyage.dart';
-import 'package:terappmobile/screens/train/train_voyage.dart';
-import 'package:terappmobile/screens/auth/welcome.dart';
-import 'package:terappmobile/utils/app_colors.dart';
+import 'package:terappmobile/screens/home/carte_abonnement.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,7 +28,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           // ...
-          home: SignUp(),
+          home: CarteAbonnement(),
         ));
   }
 }

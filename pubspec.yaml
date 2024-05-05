@@ -50,6 +50,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   whatsapp_chatbot: ^1.0.0
   flutter_icon_snackbar: ^1.1.7
+  simple_barcode_scanner: ^0.1.1
 
 
   
@@ -143,6 +144,7 @@ flutter:
     - images/logoOM.png
     - images/logoMI.png
     - images/agence.png
+    - images/qr.png
   
 
     
